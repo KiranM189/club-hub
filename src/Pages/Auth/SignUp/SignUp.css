@@ -1,36 +1,5 @@
-/* Login.css */
-
-/* Gradient Animation */
-@keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Prevent scrolling */
-  }
-  
   /* Container with Animated Background */
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(45deg, #7529ae, #b50ecb, #f209a4, #ef0423, #ed04e1, #7306f0);
-    background-size: 400% 400%; /* To allow gradient to cover the entire area */
-    animation: gradient 15s ease infinite; /* Animation settings */
-  }
-  
-  /* Login Form */
+
   .form {
     background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent background */
     padding: 40px;
