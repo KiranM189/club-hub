@@ -10,7 +10,7 @@ const events = [
     eventName: 'Nature Photography Workshop',
     date: 'October 20, 2024',
     description: 'Learn the art of capturing nature in this hands-on workshop.',
-    iamge : 'https://picsum.photos/800/400'
+    image: 'https://picsum.photos/800/400',
   },
   {
     id: 2,
@@ -62,8 +62,6 @@ const HomePage = () => {
     <div className="home-page">
       <h1>Welcome to Club Hub</h1>
       <p>Discover events from various clubs happening around you!</p>
-
-      {/* Carousel Section */}
       <div className="carousel-container">
         <Carousel
           showArrows={true}
@@ -87,7 +85,6 @@ const HomePage = () => {
         </Carousel>
       </div>
 
-      {/* Regular Cards Section */}
       <div className="events-container">
         {regularEvents.map((event) => (
           <div key={event.id} className="event-card">
