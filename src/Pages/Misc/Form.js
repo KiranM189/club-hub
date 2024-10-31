@@ -11,7 +11,7 @@ export default function Form() {
     gender: 'Male',
     contact: '',
     campus: 'RR',
-    year: '2024',
+    year: '2025',
     specialization: 'CS',
   });
 
@@ -25,7 +25,6 @@ export default function Form() {
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
     fetch('http://localhost:5050/form', {
       method: 'POST',
       headers: {

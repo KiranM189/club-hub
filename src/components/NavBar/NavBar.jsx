@@ -1,18 +1,20 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import profile_img from '../../assets/profile-icon-png-898.png'
 
-const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Form', href: '/form', current: false },
-  { name: 'SignUp', href: '/signup', current: false },
-  { name: 'Login', href: '/login', current: false },
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+  const navigation = [
+    { name: 'Home', href: '/', current: false },
+    { name: 'Clubs', href: '/clubs', current: false },
+    { name: 'Events', href: '/events', current: false },
+    { name: 'Sign In', href: '/signin', current: false },
+  ]
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -70,7 +72,7 @@ export default function Navbar() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={profile_img}
                     className="h-8 w-8 rounded-full"
                   />
                 </MenuButton>
