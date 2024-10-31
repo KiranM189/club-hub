@@ -6,10 +6,10 @@ app.use(cors());
 app.use(express.json());
 
 const pool=mysql.createPool({
-    host:"127.0.0.1",
+    host:"10.30.201.241",
     user:"root",
-    password:"KiranM786@#",
-    database:"ISA"
+    password:"root",
+    database:"club_hub"
 },(err,result)=>{
     if(err) 
         console.log(err)
@@ -38,6 +38,22 @@ app.post('/login',(req,res)=>{
     })
 })
 
+
+app.post('/form', (req, res) => {
+    const { username, about, firstName, lastName, srn, gender, contact, campus, year, specialization } = req.body;
+    const command = `INSERT INTO student(srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization) 
+                     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    pool.query(command, [srn, username, about, firstName, lastName, gender, contact, campus, year, specialization], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Internal server error");
+        }
+        
+        console.log(result);
+        return res.status(200).send("Data inserted successfully");
+    });
+    
+});
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
 })

@@ -1,24 +1,24 @@
-/* HomePage.css */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
 .home-page {
   text-align: center;
   padding: 20px;
 }
 
-h1 {
+.heading h1 {
+  font-size: 2rem;
+  font-weight: bold;
   color: #333;
 }
 
 .carousel-container {
   margin: 20px auto;
-  width: 80%;
+  width: 60%;
 }
 
 .carousel-slide img {
@@ -38,14 +38,15 @@ h1 {
   text-align: center;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  forced-color-adjust: #fff;
 }
 
-h2, h3 {
-  color: #444;
+.carousel-caption h2, h3 {
+  color: #fff;
 }
 
-p {
-  color: #666;
+.carousel-caption p {
+  color: #f0f0f0;
 }
 
 .events-container {
@@ -65,7 +66,10 @@ p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
-
+.event-card h2{
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
 .event-card:hover {
   transform: translateY(-5px);
 }

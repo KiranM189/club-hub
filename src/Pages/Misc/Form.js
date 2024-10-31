@@ -1,9 +1,66 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import React, { useState } from 'react';
 
 export default function Form() {
+  // State to store form data
+  const [formData, setFormData] = useState({
+    username: '',
+    about: '',
+    firstName: '',
+    lastName: '',
+    srn: '',
+    gender: 'Male',
+    contact: '',
+    campus: 'RR',
+    year: '2024',
+    specialization: 'CS',
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch('http://localhost:5050/form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if(response.status==200){
+          setFormData({
+            username: '',
+            about: '',
+            firstName: '',
+            lastName: '',
+            srn: '',
+            gender: 'Male',
+            contact: '',
+            campus: 'RR',
+            year: '2024',
+            specialization: 'CS',
+          })
+        }
+      })
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-8">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -18,12 +75,12 @@ export default function Form() {
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
                     <input
                       id="username"
                       name="username"
                       type="text"
-                      autoComplete="username"
+                      value={formData.username}
+                      onChange={handleChange}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -39,8 +96,9 @@ export default function Form() {
                     id="about"
                     name="about"
                     rows={3}
+                    value={formData.about}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={''}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
@@ -54,37 +112,39 @@ export default function Form() {
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
-                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
                   First name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="first-name"
-                    name="first-name"
+                    id="firstName"
+                    name="firstName"
                     type="text"
-                    autoComplete="given-name"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
                   Last name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="last-name"
-                    name="last-name"
+                    id="lastName"
+                    name="lastName"
                     type="text"
-                    autoComplete="family-name"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="srn" className="block text-sm font-medium leading-6 text-gray-900">
                   SRN
                 </label>
                 <div className="mt-2">
@@ -92,19 +152,23 @@ export default function Form() {
                     id="srn"
                     name="srn"
                     pattern="PES(1|2)(UG|PG)(21|22|23|24)(CS|AM|EC|EE|ME|BT)[0-9]{3}"
+                    value={formData.srn}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="gender" className="block text-sm font-medium leading-6 text-gray-900">
                   Gender
                 </label>
                 <div className="mt-2">
                   <select
                     id="gender"
                     name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option>Male</option>
@@ -113,9 +177,9 @@ export default function Form() {
                   </select>
                 </div>
               </div>
-              
+
               <div className="sm:col-span-4">
-                <label htmlFor="srn" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900">
                   Contact Number
                 </label>
                 <div className="mt-2">
@@ -124,6 +188,8 @@ export default function Form() {
                     name="contact"
                     type="tel"
                     pattern="[0-9]{10}"
+                    value={formData.contact}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -131,12 +197,14 @@ export default function Form() {
 
               <div className="sm:col-span-2 sm:col-start-1">
                 <label htmlFor="campus" className="block text-sm font-medium leading-6 text-gray-900">
-                    Campus
+                  Campus
                 </label>
                 <div className="mt-2">
                   <select
-                    id="gender"
-                    name="gender"
+                    id="campus"
+                    name="campus"
+                    value={formData.campus}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option>RR</option>
@@ -146,13 +214,15 @@ export default function Form() {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="campus" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="year" className="block text-sm font-medium leading-6 text-gray-900">
                   Year of Graduation
                 </label>
                 <div className="mt-2">
                   <select
                     id="year"
                     name="year"
+                    value={formData.year}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option>2025</option>
@@ -164,13 +234,15 @@ export default function Form() {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="campus" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="specialization" className="block text-sm font-medium leading-6 text-gray-900">
                   Specialization
                 </label>
                 <div className="mt-2">
                   <select
-                    id="gender"
-                    name="gender"
+                    id="specialization"
+                    name="specialization"
+                    value={formData.specialization}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option>CS</option>
@@ -200,4 +272,4 @@ export default function Form() {
       </form>
     </div>
   );
-};
+}
