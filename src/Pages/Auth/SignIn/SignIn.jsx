@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
-const SignUp = () => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
-  const [createpassword,setCreatePassword] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -15,40 +14,35 @@ const SignUp = () => {
     setPassword(e.target.value);
   };
 
-  const handleCreatePassword = (e) => {
-    setCreatePassword(e.target.value);
-  }
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (createpassword !== password) {
-        alert("Passwords do not match.");
-        return; // Stop execution if passwords don't match
-    }
-    fetch('http://localhost:5050/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
+    e.preventDefault(); 
+    fetch('http://localhost:5050/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
     })
-    .then((response) => {
-        if (!response.ok) {
-            return response.json().then((data) => {
-                alert(data.error);
-            });
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Sign-in failed');
         }
-        alert('Sign-up successful');
+      })
+      .then((data) => {
+        console.log('Success:', data);
+        alert(data)
         navigate('/'); 
-    })
-    .catch((error) => {
-        alert('An error occurred. Please try again.');
+      })
+      .catch((error) => {
         console.error('Error:', error);
-    });
-};
-
+        alert(error)
+      });
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -81,34 +75,22 @@ const SignUp = () => {
               />
             </div>
           </div>
+
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                Create Password
+                Password
               </label>
-            </div>
-            <div className="mt-2">
-              <input
-                onChange={handleCreatePassword}
-                id="create-password"
-                name="password"
-                type="password"
-                required
-                autoComplete="current-password"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-              />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                Confirm Password
-              </label>
+              <div className="text-sm">
+                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  Forgot password?
+                </a>
+              </div>
             </div>
             <div className="mt-2">
               <input
                 onChange={handlePassword}
-                id="confirm-password"
+                id="password"
                 name="password"
                 type="password"
                 required
@@ -129,14 +111,14 @@ const SignUp = () => {
         </form>
 
         <p className="mt-10 text-center text-sm/6 text-gray-500">
-          already a member?{' '}
-          <a href="/signin" className="font-semibold text-indigo-600 hover:text-indigo-500">
-            Sign In
+          Not a member?{' '}
+          <a href="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            Sign Up
           </a>
         </p>
       </div>
     </div>
   );
 };
-  export default SignUp;
+  export default SignIn;
   
