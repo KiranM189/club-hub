@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"KiranM786@#",
+    password:"#Mky*SSq@L2103$",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -87,6 +87,16 @@ app.post('/signup',(req, res) =>{
         }
     });
 });
+
+app.get('/clubs', (req, res) => {
+    console.log('Listening');
+    const query = 'SELECT * FROM club'; 
+    pool.query(query, (err, results) => { 
+        if (err) 
+            throw err; 
+        res.json(results); 
+    });
+})
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
