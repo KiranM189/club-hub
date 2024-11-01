@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom'; 
 export default function Form() {
-  // State to store form data
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     about: '',
@@ -10,12 +10,14 @@ export default function Form() {
     srn: '',
     gender: 'Male',
     contact: '',
+    email: '',
+    create_password: '',
+    password: '',
     campus: 'RR',
     year: '2025',
     specialization: 'CS',
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,29 +25,27 @@ export default function Form() {
     });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
-    fetch('http://localhost:5050/form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
+    e.preventDefault(); // Add this to prevent form from refreshing
+    const { create_password, password } = formData; // Destructure the necessary fields from formData
+    
+    if (create_password !== password) {
+      alert("Passwords do not match, try again.");
+    } else {
+      fetch('http://localhost:5050/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
       .then((response) => {
-        if(response.status==200){
-          setFormData({
-            username: '',
-            about: '',
-            firstName: '',
-            lastName: '',
-            srn: '',
-            gender: 'Male',
-            contact: '',
-            campus: 'RR',
-            year: '2024',
-            specialization: 'CS',
-          })
+        if (response.status === 200) {
+          alert("SignUp successful");
+          navigate('/')
+        } 
+        else{
+          alert("Email/User_name already exists");
         }
       })
       .then((data) => {
@@ -54,15 +54,17 @@ export default function Form() {
       .catch((error) => {
         console.error('Error:', error);
       });
-
+    }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-8">
       <form onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
+          <h1 className="text-2xl font-semibold leading-9 text-gray-900">Sign Up</h1>
+
             <p className="mt-1 text-sm leading-6 text-gray-600">
               This information will be displayed publicly so be careful what you share.
             </p>
@@ -193,6 +195,53 @@ export default function Form() {
                   />
                 </div>
               </div>
+              <div className="sm:col-span-4">
+                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900">
+                  Email id
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label htmlFor="create_password" className="block text-sm font-medium leading-6 text-gray-900">
+                  Create Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="create_password"
+                    name="create_password"
+                    type="password"
+                    value={formData.create_password}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                  Confirm Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
               <div className="sm:col-span-2 sm:col-start-1">
                 <label htmlFor="campus" className="block text-sm font-medium leading-6 text-gray-900">
@@ -258,14 +307,19 @@ export default function Form() {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+          <button
+            onClick={(e)=>{
+              navigate('/')
+            }}
+           type="button" className="text-sm font-semibold leading-6 text-gray-900">
             Cancel
           </button>
           <button
+            onClick={handleSubmit}
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Save
+            SignUp
           </button>
         </div>
       </form>
