@@ -28,20 +28,21 @@ const SignIn = () => {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Sign-in failed');
+          return response.json(); // Parse JSON from the response
         }
+        // If response is not OK (401, 500), still parse the JSON
+        return response.json().then((err) => {
+          throw new Error(err.error);
+        });
       })
       .then((data) => {
-        console.log('Success:', data);
-        alert(data)
-        navigate('/'); 
+        alert(data.message); // Show success message
+        navigate('/'); // Navigate on success
       })
       .catch((error) => {
-        console.error('Error:', error);
-        alert(error)
+        alert(error.message); // Show error message (User not found, Internal Server Error)
       });
+    
   };
 
   return (
@@ -82,7 +83,7 @@ const SignIn = () => {
                 Password
               </label>
               <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <a href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">
                   Forgot password?
                 </a>
               </div>
