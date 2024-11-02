@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import { useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
 
 const SignIn = () => {
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -36,6 +39,7 @@ const SignIn = () => {
         });
       })
       .then((data) => {
+        setUser(data.user)
         alert(data.message); // Show success message
         navigate('/'); // Navigate on success
       })
@@ -53,7 +57,7 @@ const SignIn = () => {
           src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
           className="mx-auto h-10 w-auto"
         />
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
           Sign in to your account
         </h2>
       </div>
@@ -61,7 +65,7 @@ const SignIn = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+            <label htmlFor="email" className="block text-sm/6 font-medium text-white">
               Email address
             </label>
             <div className="mt-2">
@@ -79,11 +83,11 @@ const SignIn = () => {
 
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="password" className="block text-sm/6 font-medium text-white">
                 Password
               </label>
               <div className="text-sm">
-                <a href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <a href="/" className="font-semibold text-indigo-600 hover:text-white">
                   Forgot password?
                 </a>
               </div>

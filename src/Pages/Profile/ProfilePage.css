@@ -1,0 +1,30 @@
+.profileCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    border-radius: 8px;
+    background-color: #1F2937;
+}
+.profileImage img {
+    margin-left: -1px;
+    width: 150px; 
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; 
+}
+.profileRow {
+    margin: 10px 0;
+    text-align: left;
+}
+.profileRow span{
+    color: #9CA3AF;
+}
+
+.profileRow strong {
+    color: white; /* Change strong font color to white */
+}
+  

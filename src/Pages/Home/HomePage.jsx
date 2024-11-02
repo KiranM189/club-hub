@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './HomePage.css';
-import Component from '../../components/NavBar/Footer';
+import Footer from '../../components/NavBar/Footer';
 const events = [
   {
     id: 1,
@@ -58,10 +58,6 @@ const HomePage = () => {
   const featuredEvents = events.slice(0, 3);
   const regularEvents = events.slice(3);
 
-  const handleJoinEvent = (eventId) => {
-    
-  };
-
   return (
     <div className="home-page">
       <div className="heading">
@@ -96,14 +92,14 @@ const HomePage = () => {
           <div key={event.id} className="event-card">
             <img src={`https://picsum.photos/400/200?random=${event.id}`}/>
             <h2>{event.clubName}</h2>
-            <h3>{event.eventName}</h3>
+            <h4>{event.eventName}</h4>
             <p><strong>Date:</strong> {event.date}</p>
             <p>{event.description}</p>
-            <button className="join-button" onClick={() => handleJoinEvent(event.id)}>Join Event</button>
+            <button className="join-button">Join Event</button>
           </div>
         ))}
       </div>
-      <Component/>
+      <Footer/>
     </div>
   );
 };

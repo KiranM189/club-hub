@@ -1,19 +1,21 @@
-body {
+.home-page {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #111827;
   margin: 0;
   padding: 0;
-}
-
-.home-page {
   text-align: center;
   padding: 0px;
 }
 
 .heading h1 {
+  margin-top: 10PX;
   font-size: 2rem;
   font-weight: bold;
-  color: #333;
+  color: #FFFFFF;
+}
+
+.heading p{
+  color: #9CA3AF;
 }
 
 .carousel-container {
@@ -58,24 +60,32 @@ body {
 }
 
 .event-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #1F2937;
   border-radius: 8px;
   padding: 20px;
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
+.event-card h4{
+  color: #fff;
+
+}
 .event-card h2{
+  font-weight: bold;
+  color: #ffff;
   margin-top: 10px;
   margin-bottom: 0px;
+}
+.event-card p{
+  color: #9CA3AF;
 }
 .event-card:hover {
   transform: translateY(-5px);
 }
 
 .join-button {
-  background-color: #007bff;
+  background-color: #4F46E5;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -85,5 +95,5 @@ body {
 }
 
 .join-button:hover {
-  background-color: #0056b3;
+  background-color: #6860f6;
 }
