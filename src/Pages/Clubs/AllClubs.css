@@ -20,8 +20,7 @@ body {
   }
   
   .event-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #1F2937;
     border-radius: 8px;
     width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,6 +29,7 @@ body {
   .event-card h2{
     margin-top: 10px;
     margin-bottom: 0px;
+    color: #fff;
   }
   .event-card:hover {
     transform: translateY(-5px);

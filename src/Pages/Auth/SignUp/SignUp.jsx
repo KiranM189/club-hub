@@ -59,19 +59,24 @@ export default function SignUp() {
   
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-8">
+    <div className="flex justify-center items-center min-h-screen  p-8">
       <form onSubmit={handleSubmit}>
         <div className="space-y-12">
+        <img
+          alt="Your Company"
+          src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+          className="mx-auto h-10 w-auto"
+        />
           <div className="border-b border-gray-900/10 pb-12">
-          <h1 className="text-2xl font-semibold leading-9 text-gray-900">Sign Up</h1>
+          <h1 className="text-2xl font-semibold leading-9 text-white">Sign Up</h1>
 
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <p className="mt-1 text-sm leading-6 text-gray-400">
               This information will be displayed publicly so be careful what you share.
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
-                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="username" className="block text-sm font-medium leading-6 text-white">
                   Username
                 </label>
                 <div className="mt-2">
@@ -82,14 +87,14 @@ export default function SignUp() {
                       type="text"
                       value={formData.username}
                       onChange={handleChange}
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    />
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
                   </div>
                 </div>
               </div>
 
               <div className="col-span-full">
-                <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="about" className="block text-sm font-medium leading-6 text-white">
                   About
                 </label>
                 <div className="mt-2">
@@ -102,18 +107,18 @@ export default function SignUp() {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
+                <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about yourself.</p>
               </div>
             </div>
           </div>
 
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
+            <h2 className="text-base font-semibold leading-7 text-white">Personal Information</h2>
+            <p className="mt-1 text-sm leading-6 text-gray-400">Use a permanent address where you can receive mail.</p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
-                <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-white">
                   First name
                 </label>
                 <div className="mt-2">
@@ -129,7 +134,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-white">
                   Last name
                 </label>
                 <div className="mt-2">
@@ -145,7 +150,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="srn" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="srn" className="block text-sm font-medium leading-6 text-white">
                   SRN
                 </label>
                 <div className="mt-2">
@@ -161,7 +166,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="gender" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="gender" className="block text-sm font-medium leading-6 text-white">
                   Gender
                 </label>
                 <div className="mt-2">
@@ -180,7 +185,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-white">
                   Contact Number
                 </label>
                 <div className="mt-2">
@@ -196,7 +201,7 @@ export default function SignUp() {
                 </div>
               </div>
               <div className="sm:col-span-4">
-                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-white">
                   Email id
                 </label>
                 <div className="mt-2">
@@ -212,7 +217,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="create_password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="create_password" className="block text-sm font-medium leading-6 text-white">
                   Create Password
                 </label>
                 <div className="mt-2">
@@ -228,7 +233,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
                   Confirm Password
                 </label>
                 <div className="mt-2">
@@ -244,7 +249,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-2 sm:col-start-1">
-                <label htmlFor="campus" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="campus" className="block text-sm font-medium leading-6 text-white">
                   Campus
                 </label>
                 <div className="mt-2">
@@ -262,7 +267,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="year" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="year" className="block text-sm font-medium leading-6 text-white">
                   Year of Graduation
                 </label>
                 <div className="mt-2">
@@ -282,7 +287,7 @@ export default function SignUp() {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="specialization" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="specialization" className="block text-sm font-medium leading-6 text-white">
                   Specialization
                 </label>
                 <div className="mt-2">
@@ -311,7 +316,8 @@ export default function SignUp() {
             onClick={(e)=>{
               navigate('/')
             }}
-           type="button" className="text-sm font-semibold leading-6 text-gray-900">
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+           type="button">
             Cancel
           </button>
           <button

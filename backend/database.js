@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -46,8 +46,22 @@ app.post('/signin', (req, res) => {
       }
   
       if (results.length > 0) {
+        const user = results[0]; 
         console.log("User found in database");
-        return res.status(200).json({ message: 'Sign-in successful' }); // Success with JSON message
+        return res.status(200).json({ message: 'Sign-in successful',
+            user: {
+                id: user.id,   
+                name: user.first_name+" "+user.last_name,
+                email: user.email,
+                srn: user.srn,
+                gender: user.gender,
+                email: user.email,
+                contact: user.contact,
+                campus: user.campus,
+                year: user.year_of_graduation,
+                specialization: user.specialization
+              }
+         }); 
       } else {
         console.log("User not found or wrong password");
         return res.status(401).json({ error: 'User/Password not found' }); // Unauthorized error
@@ -71,7 +85,6 @@ app.post('/signup',(req, res) =>{
 });
 
 app.get('/clubs', (req, res) => {
-    console.log('Listening');
     const query = 'SELECT * FROM club'; 
     pool.query(query, (err, results) => { 
         if (err) 
