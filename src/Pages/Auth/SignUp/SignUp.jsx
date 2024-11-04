@@ -179,7 +179,7 @@ export default function SignUp() {
                   >
                     <option>Male</option>
                     <option>Female</option>
-                    <option>Others</option>
+                    <option>Other</option>
                   </select>
                 </div>
               </div>

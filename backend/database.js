@@ -76,6 +76,16 @@ app.get('/clubs', (req, res) => {
     });
 })
 
+app.get('/', (req, res) => {
+    console.log("Called Events")
+    const query = 'SELECT * FROM events'; 
+    pool.query(query, (err, results) => { 
+        if (err) 
+            throw err; 
+        res.json(results); 
+    });
+})
+
 app.get('/clubs/:clubId', (req, res) => {
     const clubId = req.params.clubId;
     console.log('Entered club profile');

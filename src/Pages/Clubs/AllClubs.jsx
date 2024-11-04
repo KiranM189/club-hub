@@ -24,7 +24,8 @@ const AllClubs = () => {
                 <h1>Explore the Clubs</h1>
                 <p>Discover clubs from various options which suits you!</p>
             </div>
-            <div className="events-container">
+            <div 
+                className="events-container">
                 {events.map((event) => (
                     <div key={event.clubID} className="event-card" onClick={() => {handleClick(event.clubID)}}>
                         <img src={`https://picsum.photos/400/200?random=${event.clubID}`} alt="Event" />
