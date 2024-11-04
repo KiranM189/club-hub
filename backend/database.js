@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"",
+    password:"#Mky*SSq@L2103$",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -17,23 +17,6 @@ const pool=mysql.createPool({
     else    
         console.log(result)
 })
-
-
-
-// app.post('/form', (req, res) => {
-//     const { username, about, firstName, lastName, srn, gender, contact, campus, year, specialization } = req.body;
-//     const command = `INSERT INTO student(srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization) 
-//                      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-//     pool.query(command, [srn, username, about, firstName, lastName, gender, contact, campus, year, specialization], (err, result) => {
-//         if (err) {
-//             console.error(err);
-//             return res.status(500).send("Internal server error");
-//         }
-        
-//         console.log(result);
-//         return res.status(200).send("Data inserted successfully");
-//     });
-// });
 
 app.post('/signin', (req, res) => {
     const { email, password } = req.body;
@@ -92,6 +75,17 @@ app.get('/clubs', (req, res) => {
         res.json(results); 
     });
 })
+
+app.get('/clubs/:clubId', (req, res) => {
+    const clubId = req.params.clubId;
+    console.log('Entered club profile');
+    const query = 'SELECT * FROM club WHERE clubId = ?'; 
+    pool.query(query, [clubId], (err, results) => { 
+        if (err) 
+            throw err; 
+        res.json(results[0]); 
+    });
+});
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");

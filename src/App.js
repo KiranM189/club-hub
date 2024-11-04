@@ -7,6 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import SignUp from "./Pages/Auth/SignUp/SignUp.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import ProfileCard from "./Pages/Profile/ProfilePage.jsx";
+import ClubProfile from "./Pages/Clubs/ClubProfile.jsx";
 function App() {
   return (
     <UserProvider>
@@ -19,6 +20,7 @@ function App() {
             <Route path="/clubs" element={<AllClubs/>}/>
             <Route path='/signin' element={<SignIn />}/>
             <Route path='/profile' element={<ProfileCard />}/>
+            <Route path="/clubs/:clubId" element={<ClubProfile />} />
             <Route element={<Page_Not_Found/>}/>
           </Routes>
         </Router>
