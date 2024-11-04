@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const AllClubs = () => {
-    const navigate = useNavigate();
-    const handleClick=(id)=>{
-        navigate(`/clubs/id?=${id}`)
-    }
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
@@ -29,7 +24,7 @@ const AllClubs = () => {
             <div 
                 className="events-container">
                 {events.map((event) => (
-                    <div key={event.id} className="event-card" onClick={()=>{handleClick(event.id)}}>
+                    <div key={event.id} className="event-card">
                         <img src={`https://picsum.photos/400/200?random=${event.clubID}`} alt="Event" />
                         <h2>{event.name}</h2>
                         <p>{event.description}</p>
