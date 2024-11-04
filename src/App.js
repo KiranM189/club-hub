@@ -8,6 +8,7 @@ import SignUp from "./Pages/Auth/SignUp/SignUp.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import ProfileCard from "./Pages/Profile/ProfilePage.jsx";
 import ClubProfile from "./Pages/Clubs/ClubProfile.jsx";
+
 function App() {
   return (
     <UserProvider>

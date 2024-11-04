@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
 	username VARCHAR(30) NOT NULL UNIQUE,
     about VARCHAR(200),
     first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30),
     gender ENUM('Male', 'Female', 'Other'),
     contact CHAR(10) NOT NULL,
     campus ENUM('RR', 'EC') NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS club (
-	clubID INT PRIMARY KEY,
+	clubID INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(200),
 	campus ENUM('RR', 'EC') NOT NULL,
@@ -31,6 +31,11 @@ CREATE TABLE IF NOT EXISTS club (
     viewed INT DEFAULT 0
 );
 
+INSERT INTO club(clubId, name, description, campus, type, founded_date)
+VALUES 
+(1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18'),
+(2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10'),
+(3, 'Sanskriti', 'The club brings together students interested in classical and contemporary dances.', 'RR', 'Cultural', '2019-09-10');
 
 CREATE TABLE IF NOT EXISTS events (
     event_id INT PRIMARY KEY NOT NULL,
@@ -40,7 +45,6 @@ CREATE TABLE IF NOT EXISTS events (
     description VARCHAR(100)
 );
 
-
 INSERT INTO events (event_id, club_name, event_name, date, description) VALUES
 (1, 'Photography Club', 'Nature Photography Workshop', '2024-10-20', 'Learn the art of capturing nature in this hands-on workshop.'),
 (2, 'Coding Club', 'Hackathon 2024', '2024-11-05', 'Join us for a day-long coding challenge to solve real-world problems.'),
@@ -49,11 +53,3 @@ INSERT INTO events (event_id, club_name, event_name, date, description) VALUES
 (5, 'Music Club', 'Rock Concert', '2024-12-20', 'Experience live music with bands from around the city.'),
 (6, 'Literature Club', 'Poetry Slam', '2025-01-15', 'An evening of expressive poetry by budding poets.');
 
-
-USE club_hub;
-
-INSERT INTO club(clubId, name, description, campus, type, founded_date)
-VALUES 
-(1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18'),
-(2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10'),
-(3, 'Sanskriti', 'The club brings together students interested in classical and contemporary dances.', 'RR', 'Cultural', '2019-09-10')

@@ -67,6 +67,32 @@ app.post('/signup',(req, res) =>{
     });
 });
 
+app.post('/signup',(req, res) =>{
+    const { username, about, firstName, lastName, srn, gender, contact, email, password, campus, year, specialization } = req.body;
+    const command = `INSERT INTO users(srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization, email, password) 
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    pool.query(command, [srn, username, about, firstName, lastName, gender, contact,  campus, year, specialization, email, password], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({error: 'Duplicate Entry'});
+        }
+        return res.status(200).send("Data inserted successfully");
+    });
+});
+
+app.post('/newclub',(req, res) =>{
+    const { name, about, email, password, campus, type, founded_date } = req.body;
+    const command = `INSERT INTO club(name, description, email, password, campus, type, founded_date) 
+    VALUES(?, ?, ?, ?, ?, ?, ?)`;
+    pool.query(command, [name, about, email, password, campus, type, founded_date], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({error: 'Duplicate Entry'});
+        }
+        return res.status(200).send("Data inserted successfully");
+    });
+});
+
 app.get('/clubs', (req, res) => {
     const query = 'SELECT * FROM club'; 
     pool.query(query, (err, results) => { 
