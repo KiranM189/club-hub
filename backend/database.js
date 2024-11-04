@@ -18,23 +18,6 @@ const pool=mysql.createPool({
         console.log(result)
 })
 
-
-
-// app.post('/form', (req, res) => {
-//     const { username, about, firstName, lastName, srn, gender, contact, campus, year, specialization } = req.body;
-//     const command = `INSERT INTO student(srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization) 
-//                      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-//     pool.query(command, [srn, username, about, firstName, lastName, gender, contact, campus, year, specialization], (err, result) => {
-//         if (err) {
-//             console.error(err);
-//             return res.status(500).send("Internal server error");
-//         }
-        
-//         console.log(result);
-//         return res.status(200).send("Data inserted successfully");
-//     });
-// });
-
 app.post('/signin', (req, res) => {
     const { email, password } = req.body;
     const query = `SELECT * FROM users WHERE email = ? AND password = ?`;
@@ -86,6 +69,16 @@ app.post('/signup',(req, res) =>{
 
 app.get('/clubs', (req, res) => {
     const query = 'SELECT * FROM club'; 
+    pool.query(query, (err, results) => { 
+        if (err) 
+            throw err; 
+        res.json(results); 
+    });
+})
+
+app.get('/', (req, res) => {
+    console.log("Called Events")
+    const query = 'SELECT * FROM events'; 
     pool.query(query, (err, results) => { 
         if (err) 
             throw err; 
