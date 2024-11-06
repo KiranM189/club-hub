@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
     return savedUser ? JSON.parse(savedUser) : {
       name: '',
       srn: '',
+      about: '',
       gender: '',
       email: '',
       contact: '',

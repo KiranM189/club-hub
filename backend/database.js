@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"#Mky*SSq@L2103$",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -34,6 +34,7 @@ app.post('/signin', (req, res) => {
         return res.status(200).json({ message: 'Sign-in successful',
             user: {
                 id: user.id,   
+                about: user.about,
                 name: user.first_name+" "+user.last_name,
                 email: user.email,
                 srn: user.srn,
@@ -77,7 +78,6 @@ app.get('/clubs', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    console.log("Called Events")
     const query = 'SELECT * FROM events'; 
     pool.query(query, (err, results) => { 
         if (err) 
@@ -95,6 +95,11 @@ app.get('/clubs/:clubId', (req, res) => {
             throw err; 
         res.json(results[0]); 
     });
+});
+
+app.post('/join',(req,res)=>{
+    const {event_id, user_name}=req.body;
+    
 });
 
 app.listen(5050,()=>{

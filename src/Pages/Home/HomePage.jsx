@@ -5,7 +5,13 @@ import './HomePage.css';
 import Footer from '../../components/NavBar/Footer';
 import axios from 'axios';
 import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext.jsx';
+
 const HomePage = () => {
+const navigate = useNavigate();
+const { user } = useContext(UserContext);
   const [events, setEvents] = useState([]);
   useEffect(() => {
       axios.get('http://localhost:5050')
@@ -17,6 +23,31 @@ const HomePage = () => {
               console.error('There was an error fetching the events!', error);
           });
   }, []);
+  const handleJoin = (e) => {
+    if(user.name == ""){
+      alert("SignIn before joining the event")
+      navigate('/signin')
+    }
+    else{
+      axios.post('http://localhost:5050/join', e.event_id, user.name, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          alert("Joined successful");
+          navigate('/');
+        } 
+        else {
+          alert("You have already joined the event");
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+  }
   const featuredEvents = events.slice(0, 3);
   const regularEvents = events.slice(3);
 
@@ -57,7 +88,7 @@ const HomePage = () => {
             <h4>{event.event_name}</h4>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
             <p>{event.description}</p>
-            <button className="join-button">Join Event</button>
+            <button className="join-button" onClick={()=>{handleJoin()}}>Join Event</button>
           </div>
         ))}
       </div>
