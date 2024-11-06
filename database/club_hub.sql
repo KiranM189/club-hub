@@ -34,7 +34,7 @@ VALUES
 (5, 'PES2UG22BT105', 'dharper12', 'Biotechnology major focused on environmental sustainability.', 'Diana', 'Harper', 'Female', '9812345670', 'RR', 2026, 'BT', 'dharper12@example.com', 'biotech123');
 
 CREATE TABLE IF NOT EXISTS club (
-	club_id INT PRIMARY KEY AUTO_INCREMENT,
+	clubId INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(200),
 	campus ENUM('RR', 'EC') NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS club (
     viewed INT DEFAULT 0
 );
 
-INSERT INTO club(club_id, name, description, campus, type, founded_date)
+INSERT INTO club(clubId, name, description, campus, type, founded_date)
 VALUES 
 (1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18'),
 (2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10'),
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS members (
     user_id INT NOT NULL,
     club_id INT NOT NULL,
     position ENUM('Club Head', 'Technical Head', 'Operations Head') NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (club_id) REFERENCES club(club_id)
+	FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (club_id) REFERENCES club(clubId)
 );
 
 
