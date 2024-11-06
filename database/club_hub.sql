@@ -3,7 +3,8 @@ CREATE DATABASE IF NOT EXISTS club_hub;
 USE club_hub; 
 
 CREATE TABLE IF NOT EXISTS users (
-	srn CHAR(13) PRIMARY KEY,
+	id INT PRIMARY KEY,
+	srn CHAR(13) NOT NULL UNIQUE,
 	username VARCHAR(30) NOT NULL UNIQUE,
     about VARCHAR(200),
     first_name VARCHAR(30) NOT NULL,
@@ -20,18 +21,29 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT chk_year CHECK (year_of_graduation BETWEEN 2025 AND 2028)
 );
 
+INSERT INTO users (id, srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization, email, password)
+VALUES 
+(1, 'PES1UG23CS101', 'jdoe123', 'A computer science enthusiast.', 'John', 'Doe', 'Male', '9876543210', 'RR', 2025, 'CS', 'jdoe123@example.com', 'password123'),
+
+(2, 'PES2PG22AM102', 'asmith456', 'Loves applied mathematics and data science.', 'Alice', 'Smith', 'Female', '9123456789', 'EC', 2026, 'AM', 'asmith456@example.com', 'securepass456'),
+
+(3, 'PES1UG24ME103', 'bryan789', 'Mechanical engineering student with a passion for design.', 'Bryan', 'Green', 'Male', '9871234567', 'RR', 2028, 'ME', 'bryan789@example.com', 'mechpass789'),
+
+(4, 'PES1UG23EC104', 'carlie25', 'Exploring the world of electronics and communications.', 'Carlie', 'Brown', 'Other', '9123654780', 'EC', 2025, 'EC', 'carlie25@example.com', 'ecomm25'),
+
+(5, 'PES2UG22BT105', 'dharper12', 'Biotechnology major focused on environmental sustainability.', 'Diana', 'Harper', 'Female', '9812345670', 'RR', 2026, 'BT', 'dharper12@example.com', 'biotech123');
+
 CREATE TABLE IF NOT EXISTS club (
-	clubID INT PRIMARY KEY AUTO_INCREMENT,
+	club_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(200),
 	campus ENUM('RR', 'EC') NOT NULL,
     type ENUM('Technical', 'Cultural', 'Community Service', 'Sports', 'Other') NOT NULL,
     founded_date DATE NOT NULL,
-	liked INT DEFAULT 0,
     viewed INT DEFAULT 0
 );
 
-INSERT INTO club(clubId, name, description, campus, type, founded_date)
+INSERT INTO club(club_id, name, description, campus, type, founded_date)
 VALUES 
 (1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18'),
 (2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10'),
@@ -53,3 +65,25 @@ INSERT INTO events (event_id, club_name, event_name, date, description) VALUES
 (5, 'Music Club', 'Rock Concert', '2024-12-20', 'Experience live music with bands from around the city.'),
 (6, 'Literature Club', 'Poetry Slam', '2025-01-15', 'An evening of expressive poetry by budding poets.');
 
+CREATE TABLE IF NOT EXISTS members (
+    member_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    club_id INT NOT NULL,
+    position ENUM('Club Head', 'Technical Head', 'Operations Head') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (club_id) REFERENCES club(club_id)
+);
+
+
+INSERT INTO members (member_id, user_id, club_id, position) VALUES
+(1, 1, 1, 'Club Head'),
+(2, 2, 1, 'Technical Head'),
+(3, 3, 1, 'Operations Head');
+
+CREATE TABLE IF NOT EXISTS participants (
+	participant_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    event_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(event_id)
+);

@@ -32,6 +32,7 @@ const AllClubs = () => {
                         <h2>{event.name}</h2>
                         <p>{event.description}</p>
                     </div>
+                
                 ))}
             </div>
         </div>

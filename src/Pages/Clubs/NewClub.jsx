@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-export default function SignUp() {
+
+export default function NewClub() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',

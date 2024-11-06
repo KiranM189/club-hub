@@ -115,13 +115,36 @@ app.get('/', (req, res) => {
 app.get('/clubs/:clubId', (req, res) => {
     const clubId = req.params.clubId;
     console.log('Entered club profile');
-    const query = 'SELECT * FROM club WHERE clubId = ?'; 
-    pool.query(query, [clubId], (err, results) => { 
+    const query1 = 'SELECT * FROM club WHERE clubId = ?'; 
+    const query2 = `
+    SELECT users.first_name, users.last_name, members.position
+    FROM members
+    JOIN users ON members.user_id = users.id
+    WHERE members.club_id = ?`;
+    const query3 = 'UPDATE club SET viewed = viewed + 1 WHERE clubId = ?';
+    pool.query(query3, [clubId], (err, updateResults) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        console.log('View count incremented');
+    });
+    pool.query(query1, [clubId], (err, results) => { 
         if (err) 
             throw err; 
-        res.json(results[0]); 
-    });
-});
+        const clubDetails = results[0];
+        console.log(clubDetails);
+        pool.query(query2, [clubId], (err, memberResults) => {
+            if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+            }
+            clubDetails.members = memberResults;
+            console.log(clubDetails);
+            res.json(clubDetails);
+        });
+    }); 
+})
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
