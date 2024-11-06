@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
-
+import axios from 'axios';
 const SignIn = () => {
   const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
@@ -19,15 +19,15 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    fetch('http://localhost:5050/signin', {
-      method: 'POST',
+    
+
+    axios.post('http://localhost:5050/signin', {
+      email: email,
+      password: password,
+    }, {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      }
     })
       .then((response) => {
         if (response.ok) {

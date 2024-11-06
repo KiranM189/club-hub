@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"#Mky*SSq@L2103$",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -103,7 +103,6 @@ app.get('/clubs', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    console.log("Called Events")
     const query = 'SELECT * FROM events'; 
     pool.query(query, (err, results) => { 
         if (err) 
@@ -117,7 +116,7 @@ app.get('/clubs/:clubId', (req, res) => {
     console.log('Entered club profile');
     const query1 = 'SELECT * FROM club WHERE clubId = ?'; 
     const query2 = `
-    SELECT users.first_name, users.last_name, members.position
+    SELECT members.member_id, users.first_name, users.last_name, members.position
     FROM members
     JOIN users ON members.user_id = users.id
     WHERE members.club_id = ?`;
@@ -136,8 +135,8 @@ app.get('/clubs/:clubId', (req, res) => {
         console.log(clubDetails);
         pool.query(query2, [clubId], (err, memberResults) => {
             if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Internal Server Error' });
+                console.error(err);
+                return res.status(500).json({ error: 'Internal Server Error' });
             }
             clubDetails.members = memberResults;
             console.log(clubDetails);
@@ -145,6 +144,20 @@ app.get('/clubs/:clubId', (req, res) => {
         });
     }); 
 })
+
+app.post('/join',(req,res)=>{
+    const {event_id, user_id}=req.body;
+    const query=`INSERT INTO participants(user_id,event_id) VALUES(?,?)`;
+    pool.query(query, [user_id,event_id], (err,results)=>{
+        if(err) {
+            console.error(err)
+            return res.status(500).json();
+        }
+        else{
+            res.status(200).json({message: 'Successfully joined'});
+        }
+    });
+});
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
