@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProfilePage.css'; // Import the CSS file
+import './ProfilePage.css'; 
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext.jsx';
 import profile_img from '../../assets/profile-icon-png-898.png'
@@ -49,7 +49,7 @@ const ProfilePage = () => {
         </div>
         <div className="profileRow">
           <strong>About: </strong>
-          <p>{formData.about}</p>
+          <span>{formData.about}</span>
         </div>
         </div>
         <div className="profileImage">

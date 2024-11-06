@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 export default function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -31,29 +32,25 @@ export default function SignUp() {
     
     if (create_password !== password) {
       alert("Passwords do not match, try again.");
-    } else {
-      fetch('http://localhost:5050/signup', {
-        method: 'POST',
+    } 
+    else {
+    axios.post('http://localhost:5050/signup', formData, {
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          alert("SignUp successful");
-          navigate('/')
-        } 
-        else{
-          alert("Email/User_name already exists");
         }
-      })
-      .then((data) => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        alert("SignUp successful");
+        navigate('/');
+      } 
+      else {
+        alert("Email/User_name already exists");
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
     }
   };
   

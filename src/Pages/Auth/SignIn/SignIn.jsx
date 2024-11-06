@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
-
+import axios from 'axios';
 const SignIn = () => {
   const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
@@ -19,34 +19,28 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    fetch('http://localhost:5050/signin', {
-      method: 'POST',
+    
+
+    axios.post('http://localhost:5050/signin', {
+      email: email,
+      password: password,
+    }, {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      }
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse JSON from the response
-        }
-        // If response is not OK (401, 500), still parse the JSON
-        return response.json().then((err) => {
-          throw new Error(err.error);
-        });
-      })
-      .then((data) => {
-        setUser(data.user)
-        alert(data.message); // Show success message
-        navigate('/'); // Navigate on success
-      })
-      .catch((error) => {
-        alert(error.message); // Show error message (User not found, Internal Server Error)
-      });
-    
+    .then((response) => {
+      setUser(response.data.user); 
+      alert(response.data.message); 
+      navigate('/'); 
+    })
+    .catch((error) => {
+      if (error.response && error.response.data) {
+        alert(error.response.data.error); // Show error message (e.g., User not found)
+      } else {
+        alert('An error occurred: ' + error.message);
+      }
+    });    
   };
 
   return (
