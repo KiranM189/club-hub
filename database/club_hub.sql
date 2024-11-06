@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS participants (
     event_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (event_id) REFERENCES events(event_id),
-    UNIQUE(user_id, event_id)
+    UNIQUE(user_id, event_id)	
 );
 
 CREATE TABLE IF NOT EXISTS club_applications (

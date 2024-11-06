@@ -41,28 +41,30 @@ app.post('/signin', (req, res) => {
                 }
             }); 
         }
-    });
-    pool.query(query2, [email, password], (error, results) => {
-      if (error) {
-        console.log('Error:', error);
-        return res.status(500).json({ error: 'Internal Server Error' }); // Send JSON response
-      }
-  
-      if (results.length > 0) {
-        const user = results[0]; 
-        console.log("User found in database");
-        return res.status(200).json({ message: 'Sign-in successful',
-            user: {
-                id: user.id,   
-                name: user.first_name + ' ' + user.last_name,
-                email: user.email,
-                isadmin: false
-              }
-         }); 
-      } else {
-        console.log("User not found or wrong password");
-        return res.status(401).json({ error: 'User/Password not found' }); // Unauthorized error
-      }
+        else {
+            pool.query(query2, [email, password], (error, results) => {
+                if (error) {
+                  console.log('Error:', error);
+                  return res.status(500).json({ error: 'Internal Server Error' }); // Send JSON response
+                }
+            
+                if (results.length > 0) {
+                  const user = results[0]; 
+                  console.log("User found in database");
+                  return res.status(200).json({ message: 'Sign-in successful',
+                      user: {
+                          id: user.id,   
+                          name: user.first_name + ' ' + user.last_name,
+                          email: user.email,
+                          isadmin: false
+                        }
+                   }); 
+                } else {
+                  console.log("User not found or wrong password");
+                  return res.status(401).json({ error: 'User/Password not found' }); // Unauthorized error
+                }
+            });
+        }
     });
   });
   
