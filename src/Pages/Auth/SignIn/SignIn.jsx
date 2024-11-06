@@ -30,16 +30,8 @@ const SignIn = () => {
       }
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse JSON from the response
-        }
-        // If response is not OK (401, 500), still parse the JSON
-        return response.json().then((err) => {
-          throw new Error(err.error);
-        });
-      })
-      .then((data) => {
-        console.log(data)
+        console.log(response)
+        const data = response.data; // Access data directly from response
         setUser(data.user)
         alert(data.message); // Show success message
         navigate('/'); // Navigate on success
