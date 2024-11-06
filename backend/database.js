@@ -20,9 +20,29 @@ const pool=mysql.createPool({
 
 app.post('/signin', (req, res) => {
     const { email, password } = req.body;
-    const query = `SELECT * FROM users WHERE email = ? AND password = ?`;
-    
-    pool.query(query, [email, password], (error, results) => {
+    const query2 = `SELECT * FROM users WHERE email = ? AND password = ?`;
+    const query1 = `SELECT * FROM admin WHERE email = ? AND password = ?`;
+
+    pool.query(query1, [email, password], (error, results) => {
+        if (error) {
+            console.log('Error:', error);
+            return res.status(500).json({ error: 'Internal Server Error' }); // Send JSON response
+        }
+
+        if (results.length > 0) {
+            const user = results[0]; 
+            console.log("User found in database");
+            return res.status(200).json({ message: 'Sign-in successful',
+                user: {
+                    id: 0,
+                    name: user.first_name + ' ' + user.last_name,
+                    email: user.email,
+                    isadmin: true
+                }
+            }); 
+        }
+    });
+    pool.query(query2, [email, password], (error, results) => {
       if (error) {
         console.log('Error:', error);
         return res.status(500).json({ error: 'Internal Server Error' }); // Send JSON response
@@ -34,15 +54,9 @@ app.post('/signin', (req, res) => {
         return res.status(200).json({ message: 'Sign-in successful',
             user: {
                 id: user.id,   
-                name: user.first_name+" "+user.last_name,
+                name: user.first_name + ' ' + user.last_name,
                 email: user.email,
-                srn: user.srn,
-                gender: user.gender,
-                email: user.email,
-                contact: user.contact,
-                campus: user.campus,
-                year: user.year_of_graduation,
-                specialization: user.specialization
+                isadmin: false
               }
          }); 
       } else {
@@ -52,20 +66,6 @@ app.post('/signin', (req, res) => {
     });
   });
   
-
-app.post('/signup',(req, res) =>{
-    const { username, about, firstName, lastName, srn, gender, contact, email, password, campus, year, specialization } = req.body;
-    const query = `INSERT INTO users (email,password) VALUES (?,?)`;
-    const command = `INSERT INTO users(srn, username, about, first_name, last_name, gender, contact, campus, year_of_graduation, specialization, email, password) 
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(command, [srn, username, about, firstName, lastName, gender, contact,  campus, year, specialization, email, password], (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({error: 'Duplicate Entry'});
-        }
-        return res.status(200).send("Data inserted successfully");
-    });
-});
 
 app.post('/signup',(req, res) =>{
     const { username, about, firstName, lastName, srn, gender, contact, email, password, campus, year, specialization } = req.body;
@@ -81,10 +81,10 @@ app.post('/signup',(req, res) =>{
 });
 
 app.post('/newclub',(req, res) =>{
-    const { name, about, email, password, campus, type, founded_date } = req.body;
-    const command = `INSERT INTO club(name, description, email, password, campus, type, founded_date) 
+    const { name, about, campus, type} = req.body;
+    const command = `INSERT INTO club_applications(srn, name, description, campus, type) 
     VALUES(?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(command, [name, about, email, password, campus, type, founded_date], (err, result) => {
+    pool.query(command, [srn, name, about, campus, type], (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).json({error: 'Duplicate Entry'});

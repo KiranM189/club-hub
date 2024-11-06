@@ -2,6 +2,19 @@ CREATE DATABASE IF NOT EXISTS club_hub;
 
 USE club_hub; 
 
+CREATE TABLE IF NOT EXISTS admin (
+	admin_id INT PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30),
+    email VARCHAR(40) NOT NULL UNIQUE,
+    password VARCHAR(20) NOT NULL
+);
+
+INSERT INTO admin (admin_id, first_name, last_name, email, password)
+VALUES 
+(1, 'Keerthan', 'Shenoy', 'shenoyk2003@gmail.com', 'admin'),
+(2, 'Kiran', 'M', 'kirankirankiran189@gmail.com', 'admin');
+
 CREATE TABLE IF NOT EXISTS users (
 	id INT PRIMARY KEY,
 	srn CHAR(13) NOT NULL UNIQUE,
@@ -14,7 +27,7 @@ CREATE TABLE IF NOT EXISTS users (
     campus ENUM('RR', 'EC') NOT NULL,
     year_of_graduation YEAR NOT NULL,
     specialization ENUM('CS', 'AM', 'EC', 'EE', 'ME', 'BT') NOT NULL,
-    email VARCHAR(40) NOT NULL,
+    email VARCHAR(40) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
     CONSTRAINT chk_contact CHECK (contact REGEXP '^[0-9]{10}$'),
     CONSTRAINT chk_srn CHECK (srn REGEXP '^PES[12](UG|PG)(21|22|23|24)(CS|AM|EC|EE|ME|BT)[0-9]{3}$'),
@@ -74,7 +87,6 @@ CREATE TABLE IF NOT EXISTS members (
     FOREIGN KEY (club_id) REFERENCES club(clubId)
 );
 
-
 INSERT INTO members (member_id, user_id, club_id, position) VALUES
 (1, 1, 1, 'Club Head'),
 (2, 2, 1, 'Technical Head'),
@@ -86,4 +98,13 @@ CREATE TABLE IF NOT EXISTS participants (
     event_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (event_id) REFERENCES events(event_id)
+);
+
+CREATE TABLE IF NOT EXISTS club_applications (
+	application_id INT PRIMARY KEY AUTO_INCREMENT,
+    srn CHAR(13) NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(200),
+	campus ENUM('RR', 'EC') NOT NULL,
+    type ENUM('Technical', 'Cultural', 'Community Service', 'Sports', 'Other') NOT NULL
 );

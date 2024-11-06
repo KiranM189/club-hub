@@ -39,6 +39,7 @@ const SignIn = () => {
         });
       })
       .then((data) => {
+        console.log(data)
         setUser(data.user)
         alert(data.message); // Show success message
         navigate('/'); // Navigate on success
