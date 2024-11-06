@@ -12,9 +12,9 @@ import { UserContext } from '../../context/UserContext.jsx';
 const HomePage = () => {
 const navigate = useNavigate();
 const { user } = useContext(UserContext);
-  const [events, setEvents] = useState([]);
+const [events, setEvents] = useState([]);
   useEffect(() => {
-      axios.get('http://localhost:5050')
+      axios.get('http://localhost:5050/')
           .then(response => {
               console.log(response.data);
               setEvents(response.data);
@@ -23,20 +23,21 @@ const { user } = useContext(UserContext);
               console.error('There was an error fetching the events!', error);
           });
   }, []);
-  const handleJoin = (e) => {
+
+  const handleJoin = (event_id) => {
     if(user.name == ""){
       alert("SignIn before joining the event")
       navigate('/signin')
     }
     else{
-      axios.post('http://localhost:5050/join', e.event_id, user.name, {
+      axios.post('http://localhost:5050/join', { user_id: user.id, event_id: event_id }, {
         headers: {
           'Content-Type': 'application/json',
         }
       })
       .then((response) => {
         if (response.status === 200) {
-          alert("Joined successful");
+          alert(response.data.message);
           navigate('/');
         } 
         else {
@@ -45,6 +46,7 @@ const { user } = useContext(UserContext);
       })
       .catch((error) => {
         console.error('Error:', error);
+        alert("You have already joined the event");
       });
     }
   }
@@ -88,7 +90,7 @@ const { user } = useContext(UserContext);
             <h4>{event.event_name}</h4>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
             <p>{event.description}</p>
-            <button className="join-button" onClick={()=>{handleJoin()}}>Join Event</button>
+            <button className="join-button" onClick={()=>{handleJoin(event.event_id)}}>Join Event</button>
           </div>
         ))}
       </div>
