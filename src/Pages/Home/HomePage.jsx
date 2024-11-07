@@ -13,16 +13,30 @@ const HomePage = () => {
 const navigate = useNavigate();
 const { user } = useContext(UserContext);
 const [events, setEvents] = useState([]);
-  useEffect(() => {
-      axios.get('http://localhost:5050/')
-          .then(response => {
-              console.log(response.data);
-              setEvents(response.data);
+const [events_joined, setEvents_joined] = useState([]);
+useEffect(() => {
+    axios.get('http://localhost:5050/')
+        .then(response => {
+            setEvents(response.data);
+        })
+        .catch(error => {
+            console.error('There was an error fetching the events!', error);
+        });
+}, []);
+
+useEffect(() => {
+  if (user && user.id) {  // Ensure user is available before making the request
+      axios.get(`http://localhost:5050/joined/${user.id}`)
+          .then(response => { 
+              setEvents_joined(response.data); // Assuming setEvents_joined is a state setter for joined events
           })
           .catch(error => {
-              console.error('There was an error fetching the events!', error);
+              console.error('There was an error in fetching joined events', error);
           });
-  }, []);
+  }
+}, [user.id]); // Add dependency to run the effect when user.id changes
+
+
 
   const handleJoin = (event_id) => {
     if(user.name == ""){
@@ -49,10 +63,10 @@ const [events, setEvents] = useState([]);
         alert("You have already joined the event");
       });
     }
+    navigate('/')
   }
   const featuredEvents = events.slice(0, 3);
   const regularEvents = events.slice(3);
-
   return (
     <div className="home-page">
       <div className="heading">
@@ -90,7 +104,9 @@ const [events, setEvents] = useState([]);
             <h4>{event.event_name}</h4>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
             <p>{event.description}</p>
-            <button className="join-button" onClick={()=>{handleJoin(event.event_id)}}>Join Event</button>
+            <button className="join-button" onClick={() => { handleJoin(event.event_id) }}>
+              {events_joined.find(joinedEvent => joinedEvent === event.event_id) ? 'Joined' : 'Join'}
+            </button>
           </div>
         ))}
       </div>

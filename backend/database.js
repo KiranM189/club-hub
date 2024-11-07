@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"#Mky*SSq@L2103$",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -175,6 +175,26 @@ app.post('/join',(req,res)=>{
         }
     });
 });
+
+app.get('/joined/:user_id', (req, res) => {
+    const user_id = req.params.user_id; // Get user_id correctly
+    const query = `SELECT event_id FROM participants WHERE user_id = ?`;
+    
+    pool.query(query, [user_id], (error, result) => {
+        if (error) {
+            console.log('Error:', error);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (result.length > 0) {
+            const event_ids = result.map(row => row.event_id); // Extract event_ids into an array
+            return res.status(200).json(event_ids); // Send all event_ids as an array
+        } else {
+            return res.status(200).json([]); // Return an empty array if no events are joined
+        }
+    });
+});
+
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
