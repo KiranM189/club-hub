@@ -24,7 +24,7 @@ const ClubProfile = () => {
             {club && (
             <div className="container1">
                 <div className="header">
-                    <img src={`https://picsum.photos/400/200?random=${clubId}`} alt="{club.name}" className="logo" />
+                    <img src={`https://picsum.photos/200/200?random=${clubId}`} alt="{club.name}" className="logo" />
                     <div className="header-text">
                         <h1 className="title">{club.name}</h1>
                         <p className="description">{club.description}</p>

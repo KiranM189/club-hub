@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS events (
 
 INSERT INTO events (event_id, club_name, event_name, date, description) VALUES
 (1, 'Photography Club', 'Nature Photography Workshop', '2024-10-20', 'Learn the art of capturing nature in this hands-on workshop.'),
-(2, 'Coding Club', 'Hackathon 2024', '2024-11-05', 'Join us for a day-long coding challenge to solve real-world problems.'),
-(3, 'Art Club', 'Canvas Painting Exhibition', '2024-11-15', 'Explore the creativity of our artists at the canvas painting exhibition.'),
+(2, 'Coding Club', 'Hackathon 2024', '2024-11-05', 'Join us for a day-long coding challenge to solve problems.'),
+(3, 'Art Club', 'Canvas Painting Exhibition', '2024-11-15', 'Explore the creativity of our artists at the canvas painting.'),
 (4, 'Dance Club', 'Hip-Hop Battle', '2024-12-10', 'Show off your moves in our exciting hip-hop dance battle.'),
 (5, 'Music Club', 'Rock Concert', '2024-12-20', 'Experience live music with bands from around the city.'),
 (6, 'Literature Club', 'Poetry Slam', '2025-01-15', 'An evening of expressive poetry by budding poets.');
