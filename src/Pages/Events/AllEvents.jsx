@@ -9,6 +9,11 @@ const AllEvents = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const [events, setEvents] = useState([]);
+
+    const handleClick = (event_id) => {
+        navigate(`/events/${event_id}`);
+    }
+
     useEffect(() => {
         axios.get('http://localhost:5050')
             .then(response => {
@@ -65,12 +70,12 @@ const AllEvents = () => {
             </div>
             <div className="events-container">
             {events.map((event) => (
-            <div key={event.event_id} className="event-card">
+            <div key={event.event_id} className="event-card" onClick={()=>{handleClick(event.event_id)}}>
                 <img src={`https://picsum.photos/400/200?random=${event.event_id}`}/>
                 <h2>{event.club_name}</h2>
                 <h4>{event.event_name}</h4>
                 <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                <p>{event.description}</p>
+                <p>{event.description_small}</p>
                 <button className="join-button" onClick={()=>{handleJoin(event.event_id)}}>
                 {events_joined.find(joinedEvent => joinedEvent === event.event_id) ? 'Joined' : 'Join'}
                 </button>

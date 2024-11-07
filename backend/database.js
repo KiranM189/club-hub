@@ -120,7 +120,7 @@ app.get('/club-application', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    const query = 'SELECT * FROM events'; 
+    const query = 'SELECT event_id, club_name, event_name, date, description_small FROM events'; 
     pool.query(query, (err, results) => { 
         if (err) 
             throw err; 
@@ -195,6 +195,19 @@ app.get('/joined/:user_id', (req, res) => {
     });
 });
 
+app.get('/events/:eventId',(req,res)=>{
+    const event_id=req.params.eventId;
+    const query = `SELECT * FROM events WHERE event_id = ?`;
+    pool.query(query,[event_id],(error,result)=>{
+        if(error){
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+        else{
+            return res.status(200).json({result})
+        }
+    })
+});
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
