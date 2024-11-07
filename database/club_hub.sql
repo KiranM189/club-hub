@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS participants (
 
 CREATE TABLE IF NOT EXISTS club_applications (
 	application_id INT PRIMARY KEY AUTO_INCREMENT,
-    srn CHAR(13) NOT NULL,
+    user_id INT NOT NULL,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(200),
 	campus ENUM('RR', 'EC') NOT NULL,

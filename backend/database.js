@@ -83,10 +83,11 @@ app.post('/signup',(req, res) =>{
 });
 
 app.post('/newclub',(req, res) =>{
-    const { name, about, campus, type} = req.body;
-    const command = `INSERT INTO club_applications(srn, name, description, campus, type) 
-    VALUES(?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(command, [srn, name, about, campus, type], (err, result) => {
+    const { user_id, name, about, campus, type} = req.body;
+    console.log(req);
+    const command = `INSERT INTO club_applications(id, name, description, campus, type) 
+    VALUES(?, ?, ?, ?, ?)`;
+    pool.query(command, [user_id, name, about, campus, type], (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).json({error: 'Duplicate Entry'});
@@ -97,6 +98,20 @@ app.post('/newclub',(req, res) =>{
 
 app.get('/clubs', (req, res) => {
     const query = 'SELECT * FROM club'; 
+    pool.query(query, (err, results) => { 
+        if (err) 
+            throw err; 
+        res.json(results); 
+    });
+})
+
+app.get('/club-application', (req, res) => {
+    const query = `
+    SELECT club_applications.name as club_name, club_applications.description, club_applications.campus, club_applications.type,
+    users.first_name, users.last_name, users.srn, users.email, users.contact, users.campus, users.year_of_graduation, users.specialization
+    FROM club_applications
+    JOIN users 
+    ON club_applications.id = users.id`; 
     pool.query(query, (err, results) => { 
         if (err) 
             throw err; 
