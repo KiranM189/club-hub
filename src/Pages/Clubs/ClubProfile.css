@@ -1,11 +1,26 @@
-.container1 {
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container1 { 
   width: 100%;
-  background: linear-gradient(135deg, #e63946, #ff6b6b);
+  background: linear-gradient(135deg, #fd043a, #7133A5, #174EF3);
+  background-size: 300% 300%; /* Make the background larger to allow for the animation */
+  animation: gradientShift 8s ease infinite; /* Animate over 8 seconds, loop infinitely */
   color: white;
   padding: 50px;
   text-align: center;
   font-family: Arial, sans-serif;
 }
+
 
 .club-profile-container {
   width: 100%;
