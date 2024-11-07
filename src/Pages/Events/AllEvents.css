@@ -40,3 +40,16 @@
     padding: 10px;
     color: #ddd;
   }
+  .join-button {
+    background-color: #4F46E5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .join-button:hover {
+    background-color: #6860f6;
+  }
