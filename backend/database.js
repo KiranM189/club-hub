@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"KiranM786@#",
+    password:"",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -85,7 +85,7 @@ app.post('/signup',(req, res) =>{
 app.post('/newclub',(req, res) =>{
     const { user_id, name, about, campus, type} = req.body;
     console.log(req);
-    const command = `INSERT INTO club_applications(id, name, description, campus, type) 
+    const command = `INSERT INTO club_applications(user_id, name, description, campus, type) 
     VALUES(?, ?, ?, ?, ?)`;
     pool.query(command, [user_id, name, about, campus, type], (err, result) => {
         if (err) {
@@ -111,7 +111,7 @@ app.get('/club-application', (req, res) => {
     users.first_name, users.last_name, users.srn, users.email, users.contact, users.campus, users.year_of_graduation, users.specialization
     FROM club_applications
     JOIN users 
-    ON club_applications.id = users.id`; 
+    ON club_applications.user_id = users.id`; 
     pool.query(query, (err, results) => { 
         if (err) 
             throw err; 

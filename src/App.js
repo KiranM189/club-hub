@@ -11,7 +11,7 @@ import ClubProfile from "./Pages/Clubs/ClubProfile.jsx";
 import NewClub from "./Pages/Clubs/NewClub.jsx";
 import ClubApplication from "./Pages/Applications/Club/ClubApplication.jsx";
 import AllEvents from "./Pages/Events/AllEvents.jsx";
-import EventProfile from "./Pages/Events/EventProfile.jsx";
+// import EventProfile from "./Pages/Events/EventProfile.jsx";
 function App() {
   return (
     <UserProvider>
@@ -28,7 +28,6 @@ function App() {
             <Route path="/newclub" element={<NewClub />} />
             <Route path="/club-application" element={<ClubApplication />} />
             <Route path="/events" element={<AllEvents/>}/>
-            <Route path="/events/:event_id" element={<EventProfile/>}/>
             <Route element={<Page_Not_Found/>}/>
           </Routes>
         </Router>

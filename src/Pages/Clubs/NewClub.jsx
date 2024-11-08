@@ -26,7 +26,7 @@ export default function NewClub() {
     e.preventDefault(); // Add this to prevent form from refreshing
     axios.post('http://localhost:5050/newclub', formData)
       .then(response => {
-        console.log('Club created successfully!', response);
+        console.log('Club created successfully!', response.data);
         navigate('/');
       })
       .catch(error => {
