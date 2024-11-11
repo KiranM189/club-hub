@@ -5,21 +5,20 @@ import axios from 'axios';
 
 const EventProfile = () => {
     const [event_info, setEventInfo] = useState(null); // default to null
-    const { event_id } = useParams();
+    const { eventId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:5050/events/${event_id}`)
+        axios.get(`http://localhost:5050/events/${eventId}`)
             .then(response => {
-                const eventData = response.data.result[0]; // assuming the result is an array
+                const eventData = response.data;  // Access response.data directly
                 eventData.date = new Date(eventData.date);
                 setEventInfo(eventData);
             })
             .catch(error => {
                 console.error('There was an error fetching the event data!', error);
             });
-    }, [event_id]);
+    }, [eventId]);
 
-    // Check if event_info is available before rendering
     if (!event_info) {
         return <div>Loading...</div>;
     }
@@ -27,7 +26,7 @@ const EventProfile = () => {
     return (
         <div>
             <div className='event-profile-container'>
-                <img src={`https://picsum.photos/400/200?random=${event_info.event_id}`}alt={event_info.event_name} />
+                <img src={`https://picsum.photos/400/200?random=${event_info.event_id}`} alt={event_info.event_name} />
                 <div className='event-info'>
                     <h1>{event_info.event_name}</h1>
                     <p>Info: {event_info.description_large}</p>
