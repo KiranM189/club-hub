@@ -49,14 +49,16 @@ CREATE TABLE IF NOT EXISTS club (
 	campus ENUM('RR', 'EC') NOT NULL,
     type ENUM('Technical', 'Cultural', 'Community Service', 'Sports', 'Other') NOT NULL,
     founded_date DATE NOT NULL,
-    viewed INT DEFAULT 0
+    viewed INT DEFAULT 0,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    password VARCHAR(20) NOT NULL
 );
 
-INSERT INTO club(clubId, name, description, campus, type, founded_date)
+INSERT INTO club(clubId, name, description, campus, type, founded_date, email, password)
 VALUES 
-(1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18'),
-(2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10'),
-(3, 'Sanskriti', 'The club brings together students interested in classical and contemporary dances.', 'RR', 'Cultural', '2019-09-10');
+(1, 'Kannada Koota', 'Karnataka Culture Language Technical', 'RR', 'Cultural', '2022-09-18', 'kannadakoota@pes.edu', 'kannadakoota'),
+(2, 'Pitch Please', 'The club brings together students interested in participating in AtmaTrisha, Freshers’ day', 'RR', 'Cultural', '2019-09-10', 'pitchplease@pes.edu', 'pitchplease'),
+(3, 'Sanskriti', 'The club brings together students interested in classical and contemporary dances.', 'RR', 'Cultural', '2019-09-10', 'sanskriti@pes.edu', 'sanskriti');
 
 CREATE TABLE IF NOT EXISTS events (
     event_id INT PRIMARY KEY NOT NULL,

@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"",
+    password:"#Mky*SSq@L2103$",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -20,8 +20,10 @@ const pool=mysql.createPool({
 
 app.post('/signin', (req, res) => {
     const { email, password } = req.body;
-    const query2 = `SELECT * FROM users WHERE email = ? AND password = ?`;
     const query1 = `SELECT * FROM admin WHERE email = ? AND password = ?`;
+    const query2 = `SELECT * FROM club WHERE email = ? AND password = ?`;
+    const query3 = `SELECT * FROM users WHERE email = ? AND password = ?`;
+    
 
     pool.query(query1, [email, password], (error, results) => {
         if (error) {
@@ -37,7 +39,8 @@ app.post('/signin', (req, res) => {
                     id: 0,
                     name: user.first_name + ' ' + user.last_name,
                     email: user.email,
-                    isadmin: true
+                    isadmin: true,
+                    isclub: false
                 }
             }); 
         }
@@ -56,12 +59,34 @@ app.post('/signin', (req, res) => {
                           id: user.id,   
                           name: user.first_name + ' ' + user.last_name,
                           email: user.email,
-                          isadmin: false
+                          isadmin: false,
+                          isclub: true
                         }
                    }); 
                 } else {
-                  console.log("User not found or wrong password");
-                  return res.status(401).json({ error: 'User/Password not found' }); // Unauthorized error
+                    pool.query(query3, [email, password], (error, results) => {
+                        if (error) {
+                          console.log('Error:', error);
+                          return res.status(500).json({ error: 'Internal Server Error' }); // Send JSON response
+                        }
+                    
+                        if (results.length > 0) {
+                          const user = results[0]; 
+                          console.log("User found in database");
+                          return res.status(200).json({ message: 'Sign-in successful',
+                              user: {
+                                  id: user.id,   
+                                  name: user.first_name + ' ' + user.last_name,
+                                  email: user.email,
+                                  isadmin: false,
+                                  isclub: false
+                                }
+                           }); 
+                        } else {
+                          console.log("User not found or wrong password");
+                          return res.status(401).json({ error: 'User/Password not found' }); // Unauthorized error
+                        }
+                    });
                 }
             });
         }
@@ -197,14 +222,18 @@ app.get('/joined/:user_id', (req, res) => {
 
 app.get('/events/:eventId',(req,res)=>{
     const event_id=req.params.eventId;
+    console.log(event_id);
     const query = `SELECT * FROM events WHERE event_id = ?`;
     pool.query(query,[event_id],(error,result)=>{
+        const eventDetails = result[0];
+        console.log(eventDetails);
         if(error){
             console.log(error);
             return res.status(500).json({error: 'Internal server error'});
         }
+    
         else{
-            return res.status(200).json({result})
+            return res.status(200).json(eventDetails);
         }
     })
 });

@@ -27,8 +27,8 @@ function App() {
             <Route path="/clubs/:clubId" element={<ClubProfile/>} />
             <Route path="/newclub" element={<NewClub />} />
             <Route path="/club-application" element={<ClubApplication />} />
-            <Route path="/events/:eventId" element={<EventProfile/>}/>
             <Route path="/events" element={<AllEvents/>}/>
+            <Route path="/events/:eventId" element={<EventProfile/>}/>
             <Route element={<Page_Not_Found/>}/>
           </Routes>
         </Router>
