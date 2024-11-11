@@ -83,8 +83,8 @@ useEffect(() => {
           interval={5000}
         >
           {featuredEvents.map((event) => (
-            <div key={event.id} className="carousel-slide">
-              <img src={`https://picsum.photos/800/400?random=${event.event_id}`} />
+            <div key={event.event_id} className="carousel-slide" onClick={()=>{navigate(`/events/${event.event_id}`)}}>
+              <img src={`https://picsum.photos/800/400?random=${event.event_id}`}/>
               <div className="carousel-caption">
                 <h2>{event.club_name}</h2>
                 <h3>{event.event_name}</h3>
@@ -99,7 +99,7 @@ useEffect(() => {
       <div className="events-container">
         {regularEvents.map((event) => (
           <div key={event.event_id} className="event-card">
-            <img src={`https://picsum.photos/400/200?random=${event.event_id}`}/>
+            <img src={`https://picsum.photos/400/200?random=${event.event_id}`} onClick={()=>{navigate(`/events/${event.event_id}`)}}/>
             <h2>{event.club_name}</h2>
             <h4>{event.event_name}</h4>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>

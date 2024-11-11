@@ -11,6 +11,7 @@ const AllEvents = () => {
     const [events, setEvents] = useState([]);
 
     const handleClick = (event_id) => {
+        console.log(event_id)
         navigate(`/events/${event_id}`);
     }
 

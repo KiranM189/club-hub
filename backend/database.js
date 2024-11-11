@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"#Mky*SSq@L2103$",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -220,23 +220,28 @@ app.get('/joined/:user_id', (req, res) => {
     });
 });
 
-app.get('/events/:eventId',(req,res)=>{
-    const event_id=req.params.eventId;
-    console.log(event_id);
-    const query = `SELECT * FROM events WHERE event_id = ?`;
-    pool.query(query,[event_id],(error,result)=>{
-        const eventDetails = result[0];
-        console.log(eventDetails);
-        if(error){
-            console.log(error);
-            return res.status(500).json({error: 'Internal server error'});
-        }
+app.get('/events/:eventId', (req, res) => {
+    const event_id = req.params.eventId;
+    console.log('Received Event ID:', event_id);  // Check if this logs
     
-        else{
-            return res.status(200).json(eventDetails);
+    const query1 = `SELECT * FROM events WHERE event_id = ?`;
+    pool.query(query1, [event_id], (error, result) => {
+        if (error) {
+            console.log('Database error:', error);
+            return res.status(500).json({ error: 'Internal server error' });
         }
-    })
+
+        if (result.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        console.log('Event found:', result[0]);
+        return res.status(200).json(result[0]);
+    });
 });
+
+
+
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
