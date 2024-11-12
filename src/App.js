@@ -1,4 +1,4 @@
-import Page_Not_Found from "./Pages/Misc/Page_Not_Found.jsx";
+import PageNotFound from "./Pages/Misc/PageNotFound.jsx";
 import SignIn from "./Pages/Auth/SignIn/SignIn.jsx";
 import Navbar from "./components/NavBar/NavBar.jsx";
 import HomePage from "./Pages/Home/HomePage.jsx";
@@ -12,6 +12,7 @@ import NewClub from "./Pages/Clubs/NewClub.jsx";
 import ClubApplication from "./Pages/Applications/Club/ClubApplication.jsx";
 import AllEvents from "./Pages/Events/AllEvents.jsx";
 import EventProfile from "./Pages/Events/EventProfile.jsx";
+import NewEvent from "./Pages/Events/NewEvent.jsx";
 function App() {
   return (
     <UserProvider>
@@ -26,10 +27,11 @@ function App() {
             <Route path='/profile/:userId' element={<ProfileCard/>}/>
             <Route path="/clubs/:clubId" element={<ClubProfile/>} />
             <Route path="/newclub" element={<NewClub />} />
+            <Route path="/newevent" element={<NewEvent />} />
             <Route path="/club-application" element={<ClubApplication />} />
             <Route path="/events" element={<AllEvents/>}/>
             <Route path="/events/:eventId" element={<EventProfile/>}/>
-            <Route path="*" element={<Page_Not_Found/>}/> 
+            <Route path="*" element={<PageNotFound/>}/> 
           </Routes>
         </Router>
       </div>

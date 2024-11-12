@@ -8,11 +8,15 @@ export default function NewClub() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
-    user_id: user.id,
-    name: '',
-    about: '',
-    campus: 'RR',
-    type: 'Technical',
+    club_id: user.id,
+    event_name: '',
+    description: '',
+    venue: '',
+    start_date: '',
+    end_date: '',
+    start_time: '',
+    end_time: '',
+    mode: 'Online',
   });
 
   const handleChange = (e) => {
@@ -24,7 +28,7 @@ export default function NewClub() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Add this to prevent form from refreshing
-    axios.post('http://localhost:5050/newclub', formData)
+    axios.post('http://localhost:5050/newevent', formData)
       .then(response => {
         console.log('Club created successfully!', response.data);
         navigate('/');
@@ -44,81 +48,138 @@ export default function NewClub() {
           className="mx-auto h-10 w-auto"
         />
           <div className="border-b border-gray-900/10 pb-12">
-          <h1 className="text-2xl font-semibold leading-9 text-white">New Club</h1>
+          <h1 className="text-2xl font-semibold leading-9 text-white">New Event</h1>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
               <div className="col-span-full">
-                <label htmlFor="about" className="block text-sm font-medium leading-6 text-white">
-                  About
+                <label htmlFor="description" className="block text-sm font-medium leading-6 text-white">
+                  Description
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="about"
-                    name="about"
+                    id="description"
+                    name="description"
                     rows={3}
-                    value={formData.about}
+                    value={formData.description}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  required />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about the club.</p>
+                <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about the event.</p>
               </div>
             </div>
           </div>
 
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-white">Club Information</h2>
+            <h2 className="text-base font-semibold leading-7 text-white">Event Details</h2>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-6">
-                <label htmlFor="name" className="block text-sm font-medium leading-6 text-white">
-                  Club Name
+                <label htmlFor="event_name" className="block text-sm font-medium leading-6 text-white">
+                  Event Name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="name"
-                    name="name"
+                    id="event_name"
+                    name="event_name"
                     type="text"
-                    value={formData.name}
+                    value={formData.event_name}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                  required />
+                </div>
+              </div>
+              <div className="sm:col-span-3">
+                <label htmlFor="start_date" className="block text-sm font-medium leading-6 text-white">
+                  Start Date
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="start_date"
+                    name="start_date"
+                    type="date"
+                    value={formData.start_date}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  required />
                 </div>
               </div>
 
-              <div className="sm:col-span-3 sm:col-start-1">
-                <label htmlFor="campus" className="block text-sm font-medium leading-6 text-white">
-                  Campus
+              <div className="sm:col-span-3">
+                <label htmlFor="end_date" className="block text-sm font-medium leading-6 text-white">
+                  End Date
                 </label>
                 <div className="mt-2">
-                  <select
-                    id="campus"
-                    name="campus"
-                    value={formData.campus}
+                  <input
+                    id="end_date"
+                    name="end_date"
+                    type="date"
+                    value={formData.end_date}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>RR</option>
-                    <option>EC</option>
-                  </select>
+                  required />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label htmlFor="start_time" className="block text-sm font-medium leading-6 text-white">
+                  Start Time
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="start_time"
+                    name="start_time"
+                    type="time"
+                    value={formData.start_time}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    required/>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label htmlFor="end_time" className="block text-sm font-medium leading-6 text-white">
+                  End Time
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="end_time"
+                    name="end_time"
+                    type="time"
+                    value={formData.end_time}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    required/>
+                </div>
+              </div>
+              <div className="sm:col-span-3 sm:col-start-1">
+                <label htmlFor="venue" className="block text-sm font-medium leading-6 text-white">
+                  Venue
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="venue"
+                    name="venue"
+                    value={formData.venue}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    required/>
                 </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label htmlFor="type" className="block text-sm font-medium leading-6 text-white">
-                  Club Type
+                  Mode
                 </label>
                 <div className="mt-2">
                   <select
-                    id="type"
-                    name="type"
-                    value={formData.type}
+                    id="mode"
+                    name="mode"
+                    value={formData.mode}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    <option>Technical</option>
-                    <option>Cultural</option>
-                    <option>Community Service</option>
-                    <option>Sports</option>
+                    <option>Online</option>
+                    <option>Offline</option>
                   </select>
                 </div>
               </div>
