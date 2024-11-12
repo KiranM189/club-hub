@@ -123,6 +123,12 @@ INSERT INTO members (member_id, user_id, club_id, position) VALUES
 (1, 1, 1, 'Club Head'),
 (2, 2, 1, 'Technical Head'),
 (3, 3, 1, 'Operations Head');
+(4, 2, 2, 'Club Head'),
+(5, 3, 2, 'Technical Head'),
+(6, 1, 2, 'Operations Head'),
+(7, 1, 3, 'Club Head'),
+(8, 2, 3, 'Technical Head'),
+(9, 3, 3, 'Operations Head'),
 
 CREATE TABLE IF NOT EXISTS participants (
 	participant_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -141,3 +147,22 @@ CREATE TABLE IF NOT EXISTS club_applications (
 	campus ENUM('RR', 'EC') NOT NULL,
     type ENUM('Technical', 'Cultural', 'Community Service', 'Sports', 'Other') NOT NULL
 );
+
+INSERT IGNORE INTO participants (user_id, event_id) 
+VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(1, 3),
+(2, 4),
+(3, 5),
+(4, 6),
+(5, 1);
+
