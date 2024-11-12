@@ -1,11 +1,24 @@
 /* Main container styling */
+@keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
 .event-profile-container {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
     padding: 20px;
-    background-color: #1F2937;
+    background: linear-gradient(135deg, #fd043a, #7133A5, #174EF3);
+    animation: gradientShift 8s ease infinite;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 900px;
@@ -51,6 +64,67 @@
     font-weight: bold;
     color: #d9534f;
 }
+.participants-table {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center table horizontally */
+    width: 100%; /* Ensure the container takes full width */
+    overflow-x: auto; /* Allows horizontal scroll on smaller screens */
+    margin-top: 20px;
+}
+
+table {
+    width: 70%; /* Adjust table width as needed */
+    border-collapse: collapse; /* Remove default spacing between table cells */
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden; /* Ensure rounded corners on all sides */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds slight shadow for 3D effect */
+}
+
+thead {
+    background-color: #ff6b6b; /* Header background */
+    color: white; /* Text color for the header */
+    text-align: left;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #ddd; /* Add a thin bottom border for table rows */
+}
+
+th {
+    font-size: 1rem; /* Font size for headers */
+    text-transform: uppercase; /* Uppercase the table headers */
+    letter-spacing: 0.1em; /* Slightly increase letter spacing */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light grey background for alternating rows */
+}
+
+tbody tr:hover {
+    background-color: #ffdddd; /* Slight highlight when hovering over a row */
+    transition: background-color 0.2s ease; /* Smooth hover transition */
+}
+
+td {
+    font-size: 0.95rem;
+    color: #333; /* Darker text color */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    th, td {
+        font-size: 0.9rem; /* Decrease font size for smaller screens */
+        padding: 10px; /* Reduce padding */
+    }
+
+    table {
+        width: 100%; /* Ensure table takes full width on small screens */
+    }
+}
+
 
 /* Media query for responsiveness */
 @media screen and (max-width: 768px) {
