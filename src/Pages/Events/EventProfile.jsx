@@ -11,6 +11,7 @@ const EventProfile = () => {
         axios.get(`http://localhost:5050/events/${eventId}`)
             .then(response => {
                 const eventData = response.data;  // Access response.data directly
+                console.log(eventData);
                 eventData.date = new Date(eventData.date);
                 setEventInfo(eventData);
             })
@@ -34,6 +35,28 @@ const EventProfile = () => {
                     <p>Location: {event_info.venue}</p>
                     <p>Promo: {event_info.event_promo}</p>
                 </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SRN</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {event_info.participants.map((participant, index) => (
+                            <tr key={index}>
+                                <td>{participant.srn}</td>
+                                <td>{participant.first_name + ' ' + participant.last_name}</td>
+                                <td>{participant.email}</td>
+                                <td>{participant.contact}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

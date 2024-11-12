@@ -220,28 +220,32 @@ app.get('/joined/:user_id', (req, res) => {
     });
 });
 
-app.get('/events/:eventId', (req, res) => {
+app.get('/events/:eventId',(req,res)=>{
     const event_id = req.params.eventId;
-    console.log('Received Event ID:', event_id);  // Check if this logs
-    
     const query1 = `SELECT * FROM events WHERE event_id = ?`;
-    pool.query(query1, [event_id], (error, result) => {
-        if (error) {
-            console.log('Database error:', error);
-            return res.status(500).json({ error: 'Internal server error' });
+    const query2 = `SELECT * FROM participants JOIN users ON participants.user_id = users.id WHERE event_id = ?`;
+    pool.query(query1, [event_id], (error, result)=>{
+        const eventDetails = result[0];
+        if(error){
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
         }
-
-        if (result.length === 0) {
-            return res.status(404).json({ error: 'Event not found' });
+    
+        else{
+            pool.query(query2, [event_id], (error,result) =>{
+                eventDetails['participants'] = result;
+                if(error){
+                    console.log(error);
+                    return res.status(500).json({error: 'Internal server error'});
+                }
+            
+                else{
+                    return res.status(200).json(eventDetails);
+                }
+            })
         }
-
-        console.log('Event found:', result[0]);
-        return res.status(200).json(result[0]);
-    });
+    })
 });
-
-
-
 
 app.listen(5050,()=>{
     console.log("Listening on port 5050...");
