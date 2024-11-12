@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"KiranM786@#",
+    password:"#Mky*SSq@L2103$",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -120,6 +120,22 @@ app.post('/newclub',(req, res) =>{
         return res.status(200).send("Data inserted successfully");
     });
 });
+
+app.post('/newevent',(req, res) =>{
+    const { club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode } = req.body;
+    console.log(req);
+    
+    const command = `INSERT INTO events(club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode) 
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    pool.query(command, [club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({error: 'Duplicate Entry'});
+        }
+        return res.status(200).send("Data inserted successfully");
+    });
+});
+
 
 app.get('/clubs', (req, res) => {
     const query = 'SELECT * FROM club'; 

@@ -62,54 +62,16 @@ VALUES
 
 CREATE TABLE IF NOT EXISTS events (
     event_id INT PRIMARY KEY NOT NULL,
-    club_name VARCHAR(30) NOT NULL,
+    club_id INT NOT NULL,
     event_name VARCHAR(40) NOT NULL,
-    date DATE NOT NULL,
-    description_small VARCHAR(100),
-    description_large VARCHAR(1000),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    start_time DATE NOT NULL,
+    end_time DATE NOT NULL,
+    description VARCHAR(1000) NOT NULL,
     venue VARCHAR(30) NOT NULL,
-    event_promo VARCHAR(1000) NOT NULL
-
+	FOREIGN KEY (club_id) REFERENCES club(clubId)
 );
-
-INSERT INTO events (event_id, club_name, event_name, date, description_small, description_large, venue, event_promo) 
-VALUES 
-(1, 'Photography Club', 'Nature Photography Workshop', '2024-10-20', 
-    'Learn the art of capturing nature in this hands-on workshop.', 
-    'The Photography Club presents a comprehensive Nature Photography Workshop designed for photographers of all skill levels. This hands-on workshop will guide you through the process of capturing stunning landscapes, wildlife, and the intricate details of nature. You\'ll learn expert techniques such as lighting, composition, and perspective while exploring natural environments. Experienced photographers will be on-site to offer personalized advice, helping you master your camera settings and develop your own unique style. All participants are encouraged to bring their own equipment and immerse themselves in the beauty of nature.', 
-    'City Park', 
-    'Don\'t miss this opportunity to learn from industry experts, connect with fellow photographers, and build your nature photography portfolio!'),
-
-(2, 'Coding Club', 'Hackathon 2024', '2024-11-05', 
-    'Join us for a day-long coding challenge to solve problems.', 
-    'Hackathon 2024 is a dynamic, adrenaline-packed coding marathon hosted by the Coding Club. In this day-long event, teams of programmers, developers, and tech enthusiasts will come together to tackle complex coding challenges under tight deadlines. Participants will use their skills in various programming languages, frameworks, and APIs to design innovative solutions to real-world problems. The hackathon also offers networking opportunities with industry professionals and tech companies. It\'s a high-energy event filled with creativity, collaboration, and competition, offering prizes and recognition for the top teams.', 
-    'Tech Innovation Hub', 
-    'Join the ultimate coding challenge and prove your skills! Whether you\'re a seasoned coder or a beginner, Hackathon 2024 is the place to showcase your talent.'),
-
-(3, 'Art Club', 'Canvas Painting Exhibition', '2024-11-15', 
-    'Explore the creativity of our artists at the canvas painting.', 
-    'Step into the world of artistic expression at the Canvas Painting Exhibition, an event hosted by the Art Club. This exhibition features a stunning collection of works created by both emerging and established artists, showcasing a diverse range of styles and themes. Each canvas tells a unique story, from abstract compositions to realistic portrayals of nature, people, and emotions. Attendees will have the opportunity to meet the artists, learn about their creative processes, and even purchase their favorite pieces. The exhibition is open to all, offering a space for art lovers to immerse themselves in the beauty and emotion of visual art.', 
-    'Downtown Art Gallery', 
-    'Be part of this artistic journey and witness the incredible talent within our community. Explore, connect, and be inspired!'),
-
-(4, 'Dance Club', 'Hip-Hop Battle', '2024-12-10', 
-    'Show off your moves in our exciting hip-hop dance battle.', 
-    'Get ready to witness an explosive night of dance at the Hip-Hop Battle hosted by the Dance Club. This high-octane event brings together some of the best street dancers in the city to compete in a fierce and entertaining hip-hop dance competition. Dancers will face off in head-to-head battles, showcasing their agility, rhythm, and creativity on the dance floor. The event will feature live DJ performances, special guest judges from the world of dance, and plenty of surprises throughout the night. Whether you\'re a dancer or a fan of the genre, this is an event you won’t want to miss.', 
-    'Main Event Hall', 
-    'Bring your energy and get ready to cheer for your favorite dancers as they battle for supremacy in this electrifying competition!'),
-
-(5, 'Music Club', 'Rock Concert', '2024-12-20', 
-    'Experience live music with bands from around the city.', 
-    'The Music Club is proud to present an unforgettable Rock Concert that will set the stage ablaze with energy and talent. Featuring some of the city’s top rock bands, this concert promises a night filled with powerful performances, thundering drum solos, and soaring guitar riffs. From classic rock anthems to modern hits, the bands will cover a wide spectrum of rock music, ensuring there\'s something for every fan. With state-of-the-art lighting and sound systems, this concert will deliver an immersive experience that\'s second to none. Get ready to sing along, dance, and lose yourself in the power of live rock music.', 
-    'City Concert Hall', 
-    'This is the ultimate rock experience for all music lovers. Grab your tickets now before they sell out and join us for a night of unforgettable music!'),
-
-(6, 'Literature Club', 'Poetry Slam', '2025-01-15', 
-    'An evening of expressive poetry by budding poets.', 
-    'The Literature Club invites you to a night of raw emotion and powerful words at the Poetry Slam. This event celebrates the art of spoken word, bringing together local poets to share their original works on stage. Each poet will deliver emotionally charged performances that touch on themes such as love, identity, social justice, and personal growth. The audience will play an interactive role by providing feedback and voting for their favorite performances. The Poetry Slam offers a supportive space for poets to express themselves and for the audience to engage with thought-provoking, creative works.', 
-    'Literature Cafe', 
-    'Prepare to be moved by the spoken word as these talented poets leave their hearts on the stage. Be sure to reserve your spot and be part of this unforgettable literary experience.');
-
 CREATE TABLE IF NOT EXISTS members (
     member_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
