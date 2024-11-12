@@ -236,10 +236,25 @@ app.get('/joined/:user_id', (req, res) => {
     });
 });
 
+app.get('/profile/:user_id',(req,res)=>{
+    const user_id=req.params.user_id
+    const query1=`SELECT srn,gender,contact,campus,year_of_graduation,specialization,about FROM users WHERE id=?`
+    pool.query(query1,[user_id],(error,result)=>{
+        if(error){
+            console.error(error)
+            return res.status(500).json();
+        }
+        else{
+            return res.status(200).json(result[0]); 
+        }
+    })
+});
+
 app.get('/events/:eventId',(req,res)=>{
     const event_id = req.params.eventId;
     const query1 = `SELECT * FROM events WHERE event_id = ?`;
     const query2 = `SELECT * FROM participants JOIN users ON participants.user_id = users.id WHERE event_id = ?`;
+    const query3= `SELECT COUNT(event_id) FROM participants WHERE event_id = ?`;
     pool.query(query1, [event_id], (error, result)=>{
         const eventDetails = result[0];
         if(error){
@@ -256,7 +271,16 @@ app.get('/events/:eventId',(req,res)=>{
                 }
             
                 else{
-                    return res.status(200).json(eventDetails);
+                    pool.query(query3, [event_id], (error,result)=>{
+                        eventDetails['participants_count'] = result[0]['COUNT(event_id)'];
+                        if(error){
+                            console.group(error);
+                            return res.status(500).json({error: 'Internal server error'});
+                        }
+                        else{
+                            return res.status(200).json(eventDetails);
+                        }
+                    })
                 }
             })
         }

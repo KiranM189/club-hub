@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './EventProfile.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext.jsx';
 const EventProfile = () => {
     const [event_info, setEventInfo] = useState(null); // default to null
     const { eventId } = useParams();
-
+    const { user } = useContext(UserContext);
     useEffect(() => {
         axios.get(`http://localhost:5050/events/${eventId}`)
             .then(response => {
@@ -31,33 +32,37 @@ const EventProfile = () => {
                 <div className='event-info'>
                     <h1>{event_info.event_name}</h1>
                     <p>Info: {event_info.description_large}</p>
+                    <p>Number of participants Enrolled: {event_info.participants_count}</p>
                     <p>Date: {event_info.date.toLocaleDateString()}</p>
                     <p>Location: {event_info.venue}</p>
                     <p>Promo: {event_info.event_promo}</p>
                 </div>
             </div>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SRN</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {event_info.participants.map((participant, index) => (
-                            <tr key={index}>
-                                <td>{participant.srn}</td>
-                                <td>{participant.first_name + ' ' + participant.last_name}</td>
-                                <td>{participant.email}</td>
-                                <td>{participant.contact}</td>
+            {
+                    user.isclub && 
+                    <div className='participants-table'>
+                        <table>
+                        <thead>
+                            <tr>
+                                <th>SRN</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            {event_info.participants.map((participant, index) => (
+                                <tr key={index}>
+                                    <td>{participant.srn}</td>
+                                    <td>{participant.first_name + ' ' + participant.last_name}</td>
+                                    <td>{participant.email}</td>
+                                    <td>{participant.contact}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                        </table>
+                    </div>
+                    }
         </div>
     );
 };
