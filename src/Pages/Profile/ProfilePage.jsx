@@ -1,63 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './ProfilePage.css'; 
-import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext.jsx';
-import profile_img from '../../assets/profile-icon-png-898.png'
+import profile_img from '../../assets/profile-icon-png-898.png';
+import axios from 'axios';
+
 const ProfilePage = () => {
     const { user } = useContext(UserContext);
     const formData = user;
-  return (
-    <div className='home-page'>
-        <div className="heading">
-            <h1>Your Profile</h1>
-            <p>{formData.name}'s Profile</p>
+    const [profileInfo, setProfileInfo] = useState(); 
+
+    useEffect(() => {
+        axios.get(`http://localhost:5050/profile/${user.id}`)
+            .then(response => {
+                const profile_data = response.data;
+                setProfileInfo(profile_data); 
+            })
+            .catch(error => {
+                console.error('There was an error fetching the profile data!', error);
+            });
+    }, [user.id]); // Dependency on user.id to refetch if it changes
+    console.log(profileInfo)
+    if (!profileInfo) {
+        return <div>Loading...</div>; // A loading message while the data is being fetched
+    }
+
+    return (
+        <div className='home-page'>
+            <div className="heading">
+                <h1>Your Profile</h1>
+                <p>{formData.name}'s Profile</p>
+            </div>
+            <div className="profileCard">
+                <div>
+                    <div className="profileRow">
+                        <strong>Full Name: </strong>
+                        <span>{formData.name}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>SRN: </strong>
+                        <span>{profileInfo.srn}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Gender: </strong>
+                        <span>{profileInfo.gender}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Email: </strong>
+                        <span>{formData.email}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Contact: </strong>
+                        <span>{profileInfo.contact}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Campus: </strong>
+                        <span>{profileInfo.campus}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Year: </strong>
+                        <span>{profileInfo.year_of_graduation}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>Specialization: </strong>
+                        <span>{profileInfo.specialization}</span>
+                    </div>
+                    <div className="profileRow">
+                        <strong>About: </strong>
+                        <span>{profileInfo.about}</span>
+                    </div>
+                </div>
+                <div className="profileImage">
+                    <img src={profile_img} alt="Profile" />
+                </div>
+            </div>
         </div>
-      <div className="profileCard">
-        <div>
-        {/* <h2>{formData.name}'s Profile</h2> */}
-        <div className="profileRow">
-          <strong>Full Name: </strong>
-          <span>{formData.name}</span>
-        </div>
-        <div className="profileRow">
-          <strong>SRN: </strong>
-          <span>{formData.srn}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Gender: </strong>
-          <span>{formData.gender}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Email: </strong>
-          <span>{formData.email}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Contact: </strong>
-          <span>{formData.contact}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Campus: </strong>
-          <span>{formData.campus}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Year: </strong>
-          <span>{formData.year}</span>
-        </div>
-        <div className="profileRow">
-          <strong>Specialization: </strong>
-          <span>{formData.specialization}</span>
-        </div>
-        <div className="profileRow">
-          <strong>About: </strong>
-          <span>{formData.about}</span>
-        </div>
-        </div>
-        <div className="profileImage">
-          <img src={profile_img} alt="Profile" />
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ProfilePage;
