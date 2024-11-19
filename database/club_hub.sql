@@ -137,3 +137,14 @@ VALUES
 (4, 6),
 (5, 1);
 
+DELIMITER //
+
+CREATE TRIGGER delete_event
+AFTER DELETE ON events
+FOR EACH ROW
+BEGIN
+    DELETE FROM participants WHERE event_id = OLD.event_id;
+END;
+//
+
+DELIMITER ;

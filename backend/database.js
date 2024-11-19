@@ -250,6 +250,19 @@ app.get('/profile/:user_id',(req,res)=>{
     })
 });
 
+app.delete('/delete/:event_id', (req, res) => {
+    const event_id = req.params.event_id;
+    const query1 = `DELETE FROM events WHERE event_id = ?`;
+    pool.query(query1, [event_id], (error, result) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            return res.status(200).json({ message: 'Event deleted successfully' });
+        }
+    });
+});
+
 app.get('/events/:eventId',(req,res)=>{
     const event_id = req.params.eventId;
     const query1 = `SELECT * FROM events WHERE event_id = ?`;
