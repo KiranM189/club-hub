@@ -75,7 +75,7 @@ const AllEvents = () => {
                 <img src={`https://picsum.photos/400/200?random=${event.event_id}`}/>
                 <h2>{event.club_name}</h2>
                 <h4>{event.event_name}</h4>
-                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                <p><strong>Date:</strong> {new Date(event.start_date).toLocaleDateString()}</p>
                 <p>{event.description_small}</p>
                 <button className="join-button" onClick={()=>{handleJoin(event.event_id)}}>
                 {events_joined.find(joinedEvent => joinedEvent === event.event_id) ? 'Joined' : 'Join'}

@@ -10,13 +10,13 @@ export default function NewClub() {
   const [formData, setFormData] = useState({
     club_id: user.id,
     event_name: '',
-    description: '',
+    description_small: '',
+    description_large: '',
     venue: '',
     start_date: '',
     end_date: '',
     start_time: '',
     end_time: '',
-    mode: 'Online',
   });
 
   const handleChange = (e) => {
@@ -28,6 +28,7 @@ export default function NewClub() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Add this to prevent form from refreshing
+    console.log(user.id);
     axios.post('http://localhost:5050/newevent', formData)
       .then(response => {
         console.log('Club created successfully!', response.data);
@@ -51,16 +52,34 @@ export default function NewClub() {
           <h1 className="text-2xl font-semibold leading-9 text-white">New Event</h1>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
+              
               <div className="col-span-full">
-                <label htmlFor="description" className="block text-sm font-medium leading-6 text-white">
+                <label htmlFor="description_small" className="block text-sm font-medium leading-6 text-white">
+                  Theme
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    id="description_small"
+                    name="description_small"
+                    rows={1}
+                    value={formData.description_small}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  required />
+                </div>
+                <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about the event.</p>
+              </div>
+
+              <div className="col-span-full">
+                <label htmlFor="description_large" className="block text-sm font-medium leading-6 text-white">
                   Description
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="description"
-                    name="description"
+                    id="description_large"
+                    name="description_large"
                     rows={3}
-                    value={formData.description}
+                    value={formData.description_large}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   required />
@@ -166,23 +185,6 @@ export default function NewClub() {
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
-                <label htmlFor="type" className="block text-sm font-medium leading-6 text-white">
-                  Mode
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="mode"
-                    name="mode"
-                    value={formData.mode}
-                    onChange={handleChange}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>Online</option>
-                    <option>Offline</option>
-                  </select>
-                </div>
-              </div>
             </div>
           </div>
         </div>

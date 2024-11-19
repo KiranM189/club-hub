@@ -56,8 +56,8 @@ app.post('/signin', (req, res) => {
                   console.log("User found in database");
                   return res.status(200).json({ message: 'Sign-in successful',
                       user: {
-                          id: user.id,   
-                          name: user.first_name + ' ' + user.last_name,
+                          id: user.clubId,   
+                          name: user.name,
                           email: user.email,
                           isadmin: false,
                           isclub: true
@@ -122,12 +122,12 @@ app.post('/newclub',(req, res) =>{
 });
 
 app.post('/newevent',(req, res) =>{
-    const { club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode } = req.body;
+    const { club_id, event_name, description_small, description_large, venue, start_date, end_date, start_time, end_time } = req.body;
     console.log(req);
     
-    const command = `INSERT INTO events(club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode) 
+    const command = `INSERT INTO events(club_id, event_name, description_small, description_large, venue, start_date, end_date, start_time, end_time) 
     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(command, [club_id, event_name, description, venue, start_date, end_date, start_time, end_time, mode], (err, result) => {
+    pool.query(command, [club_id, event_name, description_small, description_large, venue, start_date, end_date, start_time, end_time], (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).json({error: 'Duplicate Entry'});
@@ -161,7 +161,7 @@ app.get('/club-application', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    const query = 'SELECT event_id, club_name, event_name, date, description_small FROM events'; 
+    const query = 'SELECT event_id, name, event_name, start_date, events.description_small, events.description_large FROM events JOIN club ON events.club_id = club.clubId'; 
     pool.query(query, (err, results) => { 
         if (err) 
             throw err; 
@@ -253,7 +253,7 @@ app.get('/profile/:user_id',(req,res)=>{
 app.get('/events/:eventId',(req,res)=>{
     const event_id = req.params.eventId;
     const query1 = `SELECT * FROM events WHERE event_id = ?`;
-    const query2 = `SELECT * FROM participants JOIN users ON participants.user_id = users.id WHERE event_id = ?`;
+    const query2 = `CALL GetEventParticipants(?)`;
     const query3= `SELECT COUNT(event_id) FROM participants WHERE event_id = ?`;
     pool.query(query1, [event_id], (error, result)=>{
         const eventDetails = result[0];
@@ -264,7 +264,7 @@ app.get('/events/:eventId',(req,res)=>{
     
         else{
             pool.query(query2, [event_id], (error,result) =>{
-                eventDetails['participants'] = result;
+                eventDetails['participants'] = result[0];
                 if(error){
                     console.log(error);
                     return res.status(500).json({error: 'Internal server error'});
