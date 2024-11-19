@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const db = mysql.createPool({
   host: '127.0.0.1',
   user: 'root', 
-  password: 'KiranM786@#', 
+  password: '', 
   database: 'club_hub',
   port: '3306' 
 });
