@@ -8,7 +8,7 @@ app.use(express.json());
 const pool=mysql.createPool({
     host:"127.0.0.1",
     user:"root",
-    password:"#Mky*SSq@L2103$",
+    password:"KiranM786@#",
     database:"club_hub",
     port: "3306"
 },(err,result)=>{
@@ -172,13 +172,19 @@ app.get('/', (req, res) => {
 app.get('/clubs/:clubId', (req, res) => {
     const clubId = req.params.clubId;
     console.log('Entered club profile');
+    
     const query1 = 'SELECT * FROM club WHERE clubId = ?'; 
+    
     const query2 = `
-    SELECT members.member_id, users.first_name, users.last_name, members.position
-    FROM members
-    JOIN users ON members.user_id = users.id
-    WHERE members.club_id = ?`;
+    SELECT member_id, first_name, last_name, position
+    FROM (
+        SELECT members.member_id, users.first_name, users.last_name, members.position, members.club_id
+        FROM members
+        JOIN users ON members.user_id = users.id
+    ) AS subquery
+    WHERE club_id = ?`;
     const query3 = 'UPDATE club SET viewed = viewed + 1 WHERE clubId = ?';
+    
     pool.query(query3, [clubId], (err, updateResults) => {
         if (err) {
             console.error(err);
@@ -186,11 +192,13 @@ app.get('/clubs/:clubId', (req, res) => {
         }
         console.log('View count incremented');
     });
+    
     pool.query(query1, [clubId], (err, results) => { 
         if (err) 
             throw err; 
         const clubDetails = results[0];
         console.log(clubDetails);
+        
         pool.query(query2, [clubId], (err, memberResults) => {
             if (err) {
                 console.error(err);
@@ -201,7 +209,8 @@ app.get('/clubs/:clubId', (req, res) => {
             res.json(clubDetails);
         });
     }); 
-})
+});
+
 
 app.post('/join',(req,res)=>{
     const {event_id, user_id}=req.body;
