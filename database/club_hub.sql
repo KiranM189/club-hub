@@ -61,14 +61,15 @@ VALUES
 (3, 'Sanskriti', 'The club brings together students interested in classical and contemporary dances.', 'RR', 'Cultural', '2019-09-10', 'sanskriti@pes.edu', 'sanskriti');
 
 CREATE TABLE IF NOT EXISTS events (
-    event_id INT PRIMARY KEY NOT NULL,
+    event_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     club_id INT NOT NULL,
     event_name VARCHAR(40) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    start_time DATE NOT NULL,
-    end_time DATE NOT NULL,
-    description VARCHAR(1000) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    description_small VARCHAR(100) NOT NULL,
+    description_large VARCHAR(1000) NOT NULL,
     venue VARCHAR(30) NOT NULL,
 	FOREIGN KEY (club_id) REFERENCES club(clubId)
 );
@@ -84,13 +85,13 @@ CREATE TABLE IF NOT EXISTS members (
 INSERT INTO members (member_id, user_id, club_id, position) VALUES
 (1, 1, 1, 'Club Head'),
 (2, 2, 1, 'Technical Head'),
-(3, 3, 1, 'Operations Head');
+(3, 3, 1, 'Operations Head'),
 (4, 2, 2, 'Club Head'),
 (5, 3, 2, 'Technical Head'),
 (6, 1, 2, 'Operations Head'),
 (7, 1, 3, 'Club Head'),
 (8, 2, 3, 'Technical Head'),
-(9, 3, 3, 'Operations Head'),
+(9, 3, 3, 'Operations Head');
 
 CREATE TABLE IF NOT EXISTS participants (
 	participant_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -109,6 +110,14 @@ CREATE TABLE IF NOT EXISTS club_applications (
 	campus ENUM('RR', 'EC') NOT NULL,
     type ENUM('Technical', 'Cultural', 'Community Service', 'Sports', 'Other') NOT NULL
 );
+INSERT INTO events (event_id, club_id, event_name, start_date, end_date, start_time, end_time, description_small, description_large, venue)
+VALUES 
+(1, 1, 'Kannada Rajyotsava', '2024-11-01', '2024-11-01', '10:00', '14:00', 'Karnataka state formation day celebration.', 'Celebration of Karnataka state formation day with cultural performances and traditional food.', 'Main Auditorium'),
+(2, 2, 'Pitch Perfect', '2024-12-15', '2024-12-15', '18:00', '21:00', 'Singing competition.', 'A singing competition featuring solo and group performances from students.', 'Music Hall'),
+(3, 3, 'Dance Extravaganza', '2024-10-10', '2024-10-10', '16:00', '19:00', 'Dance performances showcase.', 'A showcase of classical and contemporary dance performances by club members.', 'Dance Studio'),
+(4, 1, 'Kannada Literature Fest', '2024-09-20', '2024-09-20', '09:00', '17:00', 'Kannada literature event.', 'A day-long event featuring talks, readings, and discussions on Kannada literature.', 'Library Hall'),
+(5, 2, 'Beatbox Battle', '2024-11-25', '2024-11-25', '15:00', '18:00', 'Beatboxing competition.', 'A beatboxing competition open to all students, with prizes for the best performances.', 'Open Stage'),
+(6, 3, 'Fusion Dance Night', '2024-12-05', '2024-12-05', '19:00', '22:00', 'Fusion dance performances.', 'An evening of fusion dance performances blending classical and modern styles.', 'Main Auditorium');
 
 INSERT IGNORE INTO participants (user_id, event_id) 
 VALUES
@@ -128,3 +137,14 @@ VALUES
 (4, 6),
 (5, 1);
 
+DELIMITER //
+
+CREATE TRIGGER delete_event
+AFTER DELETE ON events
+FOR EACH ROW
+BEGIN
+    DELETE FROM participants WHERE event_id = OLD.event_id;
+END;
+//
+
+DELIMITER ;

@@ -33,9 +33,9 @@ const EventProfile = () => {
                     <h1>{event_info.event_name}</h1>
                     <p>Info: {event_info.description_large}</p>
                     <p>Number of participants Enrolled: {event_info.participants_count}</p>
-                    <p>Date: {event_info.date.toLocaleDateString()}</p>
+                    <p>Start: {new Date(event_info.start_date).toLocaleDateString()} {event_info.start_time}</p>
+                    <p>End: {new Date(event_info.end_date).toLocaleDateString()} {event_info.end_time}</p>
                     <p>Location: {event_info.venue}</p>
-                    <p>Promo: {event_info.event_promo}</p>
                 </div>
             </div>
             {

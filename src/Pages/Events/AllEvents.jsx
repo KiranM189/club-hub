@@ -15,6 +15,17 @@ const AllEvents = () => {
         navigate(`/events/${event_id}`);
     }
 
+
+    const handleDelete = (event_id) => {
+        axios.delete(`http://localhost:5050/delete/${event_id}`)
+            .then(response => {
+                console.log(response);
+                setEvents(events.filter(event => event.event_id !== event_id));
+            })
+            .catch(error => {
+                console.error('There was an error deleting the event!', error);
+            });
+    }
     useEffect(() => {
         axios.get('http://localhost:5050')
             .then(response => {
@@ -75,11 +86,18 @@ const AllEvents = () => {
                 <img src={`https://picsum.photos/400/200?random=${event.event_id}`}/>
                 <h2>{event.club_name}</h2>
                 <h4>{event.event_name}</h4>
-                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                <p><strong>Date:</strong> {new Date(event.start_date).toLocaleDateString()}</p>
                 <p>{event.description_small}</p>
+                {user.isclub && (
                 <button className="join-button" onClick={()=>{handleJoin(event.event_id)}}>
                 {events_joined.find(joinedEvent => joinedEvent === event.event_id) ? 'Joined' : 'Join'}
                 </button>
+                )}
+                {user.isadmin && (
+                <button className="join-button" onClick={(e) => { e.stopPropagation(); handleDelete(event.event_id); }}>
+                Delete Event
+                </button>
+                )}
             </div>
             ))}
         </div>
@@ -87,4 +105,4 @@ const AllEvents = () => {
   )
 }
 
-export default AllEvents
+export default AllEvents;
